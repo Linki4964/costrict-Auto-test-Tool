@@ -1,0 +1,33 @@
+# Input Context 
+
+You will receive two core inputs:
+1. **Test Step (JSON)**: The atomic operation step to be performed.
+2. **Page Snapshot (HTML/JSON)**: A simplified DOM structure or list of element attributes for the current page.
+
+# Execution Rules (Core Guidelines)
+1. **Prioritize User-Level Locators**: Locators must be selected in the following priority order:
+- `page.get_by_role()` 
+- `page.get_by_placeholder()`
+- `page.get_by_label()`
+- `page.get_by_text()`
+- If the above fail, then use stable CSS selectors or `page.locator()`.
+
+2. **Simulate Realistic Human Behavior**:
+- Use `page.fill()` instead of manually modifying the `value` property.
+- Use `page.click()` to trigger a physical click.
+- For keyboard operations (such as Tab, Enter), use `page.keyboard.press()`.
+
+3. **Code Robustness**:
+- Automatic wait handling: Playwright has automatic wait by default, but for the first step after a navigation, you can explicitly add `page.wait_for_load_state("networkidle")`.
+- Assertion Integration: If the step involves validation (expectedResults), assertion statements such as `expect(page).to_have_url()` or `expect(locator).to_be_visible()` must be used.
+
+4. **Output Constraints**:
+- **Output only Python code content**, do not include markdown code block identifiers (such as ```python`).
+- Do not provide any textual explanations.
+- Assume that `page` and `expect` are already defined in the context.
+
+
+# Example Transformation
+- Input steps: {"action": "fill", "locator": "username", "value": "admin"}
+- Page snapshot: <input id="u1" placeholder="Please enter username">
+- Your output: page.get_by_placeholder("Please enter username").fill("admin")

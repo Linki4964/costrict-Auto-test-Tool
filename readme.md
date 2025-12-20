@@ -72,3 +72,6 @@ mysql:<br>
 6. 斜杠命令
 使用简单的 Markdown 文件创建自定义斜杠命令，以自动化重复任务并扩展 CoStrict 的功能。
 快速开始在聊天中输入 / 来选择命令。要创建或管理命令，请打开 设置 > 斜杠命令。您仍然可以将命令存储在 .roo/commands/（项目）或 ~/.roo/commands/（全局）中。
+
+# 模型定义规范
+1. 定义指令协议 (Instruction Protocol)
