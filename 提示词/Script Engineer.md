@@ -8,6 +8,7 @@
 3. **环境快照 (DOM Snapshot)**: 经过精简后的页面元素列表及其属性。
 
 # Execution Rules (核心准则)
+## 点击检测
 1. **优先使用用户层定位器**: 必须按照以下优先级选择定位方式：
    - `page.get_by_role()` (最推荐，模拟人类辅助功能感知)
    - `page.get_by_placeholder()`
@@ -30,6 +31,20 @@
    - **只输出 Python 代码内容**，不要包含 markdown 代码块标识符（如 ```python ）。
    - 不要提供任何文字解释。
    - 假设 `page` 和 `expect` 已经在上下文中定义。
+## 表单校验
+1. **智能关联 (Label-to-Input Mapping)**:
+   - 当指令要求填充 [Label: 手机号] 时，你必须在 DOM 中寻找与其关联度最高的 `<input>` 或 `<textarea>`。
+   - 优先使用 Playwright 的 `page.get_by_label()`。如果 Label 和 Input 没用 `for` 属性关联，则使用 `page.locator("div").filter(has_text="手机号").get_by_role("textbox")`。
+
+2. **多类型组件支持**:
+   - **输入框**: 使用 `.fill()`。
+   - **下拉选择 (Select/Cascader)**: 先点击该组件，再从弹出的 `el-select-dropdown` 中选择目标文本。
+   - **开关 (Switch)**: 检查当前状态，若与目标状态不符再进行 `.click()`。
+
+3. **操作稳定性**:
+   - 在填写表单前，显式调用 `.scroll_into_view_if_needed()`。
+   - 填写完成后，触发 `page.keyboard.press("Tab")` 以确保前端校验逻辑（onBlur）被正确触发。
+
 
 # Exception Handling
 如果 DOM 快照中找不到匹配的元素，请基于你的经验推断最可能的定位方式，并在代码注释中简要说明原因。

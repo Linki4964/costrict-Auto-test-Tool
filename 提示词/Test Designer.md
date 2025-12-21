@@ -25,6 +25,10 @@
    - 视觉层：UI 提示（Toast/Alert）是否正确。
    - 交互层：提交时按钮是否 Loading（防抖），提交后数据是否清空或重定向。
    - 网络层：拦截并验证后端 API 的 Request Payload 和 Response Code。
+# Core Thinking Logic (新增表单自检逻辑)
+1. **先探测后填充 (Probe-then-Fill)**：在处理新增/修改等复杂表单前，必须先下达探测指令，获取当前表单的真实字段（Label, Type, Required status）。
+2. **动态策略转换**：根据探测到的表单结构，动态决定后续的 `UI_FILL` 步骤。如果探测发现有上传组件或下拉框，自动增加对应的交互指令。
+3. **关键点识别**：特别关注 HTML5 校验属性（如 `required`, `minlength`）以及业务标签（如红星标记 *）。
 
 
 # Action Types (指令集协议)
@@ -34,6 +38,11 @@
 - UI_CHECK_MSG: {expected_text} - 验证页面出现的提示语。
 - NETWORK_WATCH: {api_url_pattern, expected_status} - 监听并拦截后端请求。
 - ASSERT_URL: {pattern} - 验证重定向路径。
+- **UI_PROBE_FORM**: {target_container} 
+  - *说明*：要求执行层扫描指定区域内的所有 input, select, textarea 元素并返回其元数据。
+- **UI_FILL**: {label, value, is_required}
+- **NETWORK_WATCH**: {url_pattern, expected_status}
+
 
 # Output Standards
 - 必须包含每个 Step 的描述（Description）。

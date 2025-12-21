@@ -1,0 +1,385 @@
+
+[
+  {
+    "step_id": 1,
+    "action": "UI_NAVIGATE",
+    "element": "登录页面",
+    "url": "http://192.168.142.146/login",
+    "description": "导航到登录页面"
+  },
+  {
+    "step_id": 2,
+    "action": "UI_FILL",
+    "element": "用户名输入框",
+    "locator": "input[placeholder='请输入用户名']",
+    "value": "admin",
+    "fallback_locator": "input[name='username']",
+    "description": "输入管理员用户名"
+  },
+  {
+    "step_id": 3,
+    "action": "UI_FILL",
+    "element": "密码输入框",
+    "locator": "input[placeholder='请输入密码']",
+    "value": "admin123",
+    "fallback_locator": "input[name='password']",
+    "description": "输入管理员密码"
+  },
+  {
+    "step_id": 4,
+    "action": "UI_CLICK",
+    "element": "登录按钮",
+    "locator": ".el-button:has-text('登 录')",
+    "fallback_locator": "button[type='submit']",
+    "description": "点击登录按钮"
+  },
+  {
+    "step_id": 5,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/login",
+    "expected_status": 200,
+    "description": "监听登录接口返回状态"
+  },
+  {
+    "step_id": 6,
+    "action": "UI_WAIT",
+    "time": 2000,
+    "description": "等待登录完成和页面跳转"
+  },
+  {
+    "step_id": 7,
+    "action": "UI_CLICK",
+    "element": "系统管理菜单",
+    "locator": ".el-submenu__title:has-text('系统管理')",
+    "fallback_locator": "span:has-text('系统管理')",
+    "description": "展开侧边栏系统管理菜单"
+  },
+  {
+    "step_id": 8,
+    "action": "UI_CLICK",
+    "element": "用户管理菜单",
+    "locator": "a:has-text('用户管理')",
+    "description": "点击用户管理子菜单"
+  },
+  {
+    "step_id": 9,
+    "action": "ASSERT_URL",
+    "pattern": "/system/user",
+    "description": "验证URL是否跳转至/system/user"
+  },
+  {
+    "step_id": 10,
+    "action": "UI_WAIT",
+    "time": 1500,
+    "description": "等待用户管理页面完全加载"
+  },
+  {
+    "step_id": 11,
+    "action": "UI_CLICK",
+    "element": "新增用户按钮",
+    "locator": ".el-button:has-text('新增')",
+    "description": "点击新增按钮"
+  },
+  {
+    "step_id": 12,
+    "action": "UI_WAIT",
+    "time": 2000,
+    "description": "等待新增用户对话框完全加载"
+  },
+  {
+    "step_id": 13,
+    "action": "UI_PROBE_FORM",
+    "target_container": ".el-dialog",
+    "description": "探测新增用户表单结构和字段"
+  },
+  {
+    "step_id": 14,
+    "action": "UI_FILL",
+    "element": "用户名输入框",
+    "locator": ".el-dialog input[placeholder='请输入用户账号']",
+    "value": "test_ai",
+    "description": "输入用户名test_ai"
+  },
+  {
+    "step_id": 15,
+    "action": "UI_FILL",
+    "element": "昵称输入框",
+    "locator": ".el-dialog input[placeholder='请输入用户昵称']",
+    "value": "AI测试",
+    "description": "输入昵称AI测试"
+  },
+  {
+    "step_id": 16,
+    "action": "UI_FILL",
+    "element": "密码输入框",
+    "locator": ".el-dialog input[placeholder='请输入密码']",
+    "value": "123456",
+    "description": "输入密码123456"
+  },
+  {
+    "step_id": 17,
+    "action": "UI_FILL",
+    "element": "邮箱输入框",
+    "locator": ".el-dialog input[placeholder='请输入邮箱']",
+    "value": "test_ai@example.com",
+    "description": "输入邮箱地址"
+  },
+  {
+    "step_id": 18,
+    "action": "UI_FILL",
+    "element": "手机号输入框",
+    "locator": ".el-dialog input[placeholder='请输入手机号码']",
+    "value": "13800138000",
+    "description": "输入手机号码"
+  },
+  {
+    "step_id": 19,
+    "action": "UI_CLICK",
+    "element": "状态选择框",
+    "locator": ".el-dialog input[placeholder='请选择状态']",
+    "description": "点击状态选择框"
+  },
+  {
+    "step_id": 20,
+    "action": "UI_CLICK",
+    "element": "正常状态选项",
+    "locator": ".el-select-dropdown__item:has-text('正常')",
+    "description": "选择正常状态"
+  },
+  {
+    "step_id": 21,
+    "action": "UI_CLICK",
+    "element": "确定按钮",
+    "locator": ".el-dialog .el-button--primary:has-text('确 定')",
+    "fallback_locator": "button:has-text('确定')",
+    "description": "点击确定按钮提交"
+  },
+  {
+    "step_id": 22,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/system/user",
+    "method": "POST",
+    "expected_status": 200,
+    "description": "监听POST/system/user接口返回200"
+  },
+  {
+    "step_id": 23,
+    "action": "UI_WAIT",
+    "time": 2000,
+    "description": "等待提交结果返回"
+  },
+  {
+    "step_id": 24,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "操作成功",
+    "alternative_texts": ["新增成功", "保存成功"],
+    "description": "验证页面弹出操作成功提示"
+  },
+  {
+    "step_id": 25,
+    "action": "UI_CLICK",
+    "element": "关闭对话框按钮",
+    "locator": ".el-dialog__headerbtn",
+    "description": "关闭新增用户对话框"
+  },
+  {
+    "step_id": 26,
+    "action": "UI_WAIT",
+    "time": 1000,
+    "description": "等待对话框关闭"
+  },
+  {
+    "step_id": 27,
+    "action": "UI_FILL",
+    "element": "用户名搜索框",
+    "locator": "input[placeholder='请输入用户名']",
+    "fallback_locator": "input[name='userName']",
+    "value": "test_ai",
+    "description": "在搜索框输入用户名test_ai"
+  },
+  {
+    "step_id": 28,
+    "action": "UI_CLICK",
+    "element": "搜索按钮",
+    "locator": ".el-button:has-text('搜 索')",
+    "fallback_locator": "button:has-text('搜索')",
+    "description": "点击搜索按钮"
+  },
+  {
+    "step_id": 29,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/system/user/list",
+    "expected_status": 200,
+    "description": "监听用户列表接口返回"
+  },
+  {
+    "step_id": 30,
+    "action": "UI_WAIT",
+    "time": 1500,
+    "description": "等待搜索结果加载"
+  },
+  {
+    "step_id": 31,
+    "action": "UI_VERIFY_TABLE_ROW",
+    "search_text": "test_ai",
+    "description": "验证用户列表中包含test_ai用户"
+  },
+  {
+    "step_id": 32,
+    "action": "UI_CLICK",
+    "element": "修改按钮",
+    "locator": "tr:has-text('test_ai') button:has-text('修改')",
+    "description": "点击test_ai用户的修改按钮"
+  },
+  {
+    "step_id": 33,
+    "action": "UI_WAIT",
+    "time": 2000,
+    "description": "等待修改用户对话框完全加载"
+  },
+  {
+    "step_id": 34,
+    "action": "UI_PROBE_FORM",
+    "target_container": ".el-dialog",
+    "description": "探测修改用户表单结构和字段"
+  },
+  {
+    "step_id": 35,
+    "action": "UI_FILL",
+    "element": "昵称输入框",
+    "locator": ".el-dialog input[placeholder='请输入用户昵称']",
+    "value": "AI测试-已修改",
+    "description": "修改昵称为AI测试-已修改"
+  },
+  {
+    "step_id": 36,
+    "action": "UI_CLICK",
+    "element": "确定按钮",
+    "locator": ".el-dialog .el-button--primary:has-text('确 定')",
+    "fallback_locator": "button:has-text('确定')",
+    "description": "点击确定按钮提交修改"
+  },
+  {
+    "step_id": 37,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/system/user",
+    "method": "PUT",
+    "expected_status": 200,
+    "description": "监听PUT/system/user接口返回200"
+  },
+  {
+    "step_id": 38,
+    "action": "UI_WAIT",
+    "time": 2000,
+    "description": "等待修改结果返回"
+  },
+  {
+    "step_id": 39,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "操作成功",
+    "alternative_texts": ["修改成功", "保存成功"],
+    "description": "验证页面弹出操作成功提示"
+  },
+  {
+    "step_id": 40,
+    "action": "UI_CLICK",
+    "element": "关闭对话框按钮",
+    "locator": ".el-dialog__headerbtn",
+    "description": "关闭修改用户对话框"
+  },
+  {
+    "step_id": 41,
+    "action": "UI_WAIT",
+    "time": 1000,
+    "description": "等待对话框关闭"
+  },
+  {
+    "step_id": 42,
+    "action": "UI_CLICK",
+    "element": "刷新按钮",
+    "locator": ".el-button:has-text('刷 新')",
+    "fallback_locator": "button:has-text('刷新')",
+    "description": "点击刷新按钮更新列表"
+  },
+  {
+    "step_id": 43,
+    "action": "UI_WAIT",
+    "time": 1500,
+    "description": "等待刷新完成"
+  },
+  {
+    "step_id": 44,
+    "action": "UI_VERIFY_TABLE_ROW",
+    "search_text": "AI测试-已修改",
+    "description": "验证列表中昵称已更新为AI测试-已修改"
+  },
+  {
+    "step_id": 45,
+    "action": "UI_CLICK",
+    "element": "删除按钮",
+    "locator": "tr:has-text('test_ai') button:has-text('删除')",
+    "description": "点击test_ai用户的删除按钮"
+  },
+  {
+    "step_id": 46,
+    "action": "UI_WAIT",
+    "time": 1000,
+    "description": "等待删除确认弹窗出现"
+  },
+  {
+    "step_id": 47,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "是否确认删除",
+    "alternative_texts": "确认删除",
+    "description": "验证弹出二次确认弹窗"
+  },
+  {
+    "step_id": 48,
+    "action": "UI_CLICK",
+    "element": "确认删除按钮",
+    "locator": ".el-message-box .el-button--primary:has-text('确 定')",
+    "fallback_locator": "button:has-text('确定')",
+    "description": "在确认弹窗中点击确定"
+  },
+  {
+    "step_id": 49,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/system/user/*",
+    "method": "DELETE",
+    "expected_status": 200,
+    "description": "监听DELETE/system/user接口返回200"
+  },
+  {
+    "step_id": 50,
+    "action": "UI_WAIT",
+    "time": 2000,
+    "description": "等待删除结果返回"
+  },
+  {
+    "step_id": 51,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "操作成功",
+    "alternative_texts": ["删除成功", "操作完成"],
+    "description": "验证页面弹出操作成功提示"
+  },
+  {
+    "step_id": 52,
+    "action": "UI_CLICK",
+    "element": "刷新按钮",
+    "locator": ".el-button:has-text('刷 新')",
+    "fallback_locator": "button:has-text('刷新')",
+    "description": "点击刷新按钮更新列表"
+  },
+  {
+    "step_id": 53,
+    "action": "UI_WAIT",
+    "time": 1500,
+    "description": "等待刷新完成"
+  },
+  {
+    "step_id": 54,
+    "action": "UI_VERIFY_TABLE_EMPTY",
+    "search_text": "test_ai",
+    "description": "验证列表中不再存在test_ai用户"
+  }
+]

@@ -19,6 +19,11 @@ This plan will serve as the sole basis for downstream Script Engineers to genera
 - Interaction Layer: Verify button loading (debouncing) upon submission, and whether data is cleared or redirected after submission.
 - Network Layer: Intercept and verify the backend API's Request Payload and Response Code.
 
+# Core Thinking Logic 
+1. **Probe-then-Fill**: Before processing complex forms such as add/modify, a probe command must be issued to obtain the actual fields (Label, Type, Required status) of the current form.
+2. **Dynamic Strategy Transition**: Based on the detected form structure, dynamically determine the subsequent `UI_FILL` steps. If the probe detects an upload component or dropdown, automatically add the corresponding interaction command.
+3. **Key Point Recognition**: Pay special attention to HTML5 validation attributes (such as `required`, `minlength`) and business tags (such as red asterisks *).
+
 # Output Standards
 
 - A description for each Step is required.
