@@ -1,0 +1,252 @@
+[
+  {
+    "step_id": 1,
+    "action": "UI_NAVIGATE",
+    "element": "登录页面",
+    "url": "http://192.168.142.146/login",
+    "description": "导航到登录页面"
+  },
+  {
+    "step_id": 2,
+    "action": "UI_FILL",
+    "element": "用户名输入框",
+    "locator": "input[name='username']",
+    "value": "admin",
+    "description": "输入管理员用户名"
+  },
+  {
+    "step_id": 3,
+    "action": "UI_FILL",
+    "element": "密码输入框",
+    "locator": "input[name='password']",
+    "value": "admin123",
+    "description": "输入管理员密码"
+  },
+  {
+    "step_id": 4,
+    "action": "UI_CLICK",
+    "element": "登录按钮",
+    "locator": "button[type='submit']",
+    "description": "点击登录按钮"
+  },
+  {
+    "step_id": 5,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/login",
+    "expected_status": 200,
+    "description": "监听登录接口返回状态"
+  },
+  {
+    "step_id": 6,
+    "action": "UI_CLICK",
+    "element": "系统管理菜单",
+    "locator": "span:has-text('系统管理')",
+    "description": "展开侧边栏系统管理菜单"
+  },
+  {
+    "step_id": 7,
+    "action": "UI_CLICK",
+    "element": "用户管理菜单",
+    "locator": "a:has-text('用户管理')",
+    "description": "点击用户管理子菜单"
+  },
+  {
+    "step_id": 8,
+    "action": "ASSERT_URL",
+    "pattern": "/system/user",
+    "description": "验证URL是否跳转至/system/user"
+  },
+  {
+    "step_id": 9,
+    "action": "UI_CLICK",
+    "element": "新增用户按钮",
+    "locator": "button:has-text('新增')",
+    "description": "点击新增按钮"
+  },
+  {
+    "step_id": 10,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "新增用户",
+    "description": "验证弹出新增用户对话框"
+  },
+  {
+    "step_id": 11,
+    "action": "UI_FILL",
+    "element": "用户名输入框",
+    "locator": "input[name='userName']",
+    "value": "test_ai",
+    "description": "输入用户名test_ai"
+  },
+  {
+    "step_id": 12,
+    "action": "UI_FILL",
+    "element": "昵称输入框",
+    "locator": "input[name='nickName']",
+    "value": "AI测试",
+    "description": "输入昵称AI测试"
+  },
+  {
+    "step_id": 13,
+    "action": "UI_FILL",
+    "element": "密码输入框",
+    "locator": "input[name='password']",
+    "value": "123456",
+    "description": "输入密码123456"
+  },
+  {
+    "step_id": 14,
+    "action": "UI_CLICK",
+    "element": "状态选择框",
+    "locator": "input[name='status']",
+    "description": "点击状态选择框"
+  },
+  {
+    "step_id": 15,
+    "action": "UI_CLICK",
+    "element": "正常状态选项",
+    "locator": "li:has-text('正常')",
+    "description": "选择正常状态"
+  },
+  {
+    "step_id": 16,
+    "action": "UI_CLICK",
+    "element": "确定按钮",
+    "locator": "button:has-text('确定')",
+    "description": "点击确定按钮提交"
+  },
+  {
+    "step_id": 17,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/system/user",
+    "expected_status": 200,
+    "description": "监听POST/system/user接口返回200"
+  },
+  {
+    "step_id": 18,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "操作成功",
+    "description": "验证页面弹出操作成功提示"
+  },
+  {
+    "step_id": 19,
+    "action": "UI_FILL",
+    "element": "用户名搜索框",
+    "locator": "input[name='userName']",
+    "value": "test_ai",
+    "description": "在搜索框输入用户名test_ai"
+  },
+  {
+    "step_id": 20,
+    "action": "UI_CLICK",
+    "element": "搜索按钮",
+    "locator": "button:has-text('搜索')",
+    "description": "点击搜索按钮"
+  },
+  {
+    "step_id": 21,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/system/user/list",
+    "expected_status": 200,
+    "description": "监听用户列表接口返回"
+  },
+  {
+    "step_id": 22,
+    "action": "UI_CLICK",
+    "element": "修改按钮",
+    "locator": "button:has-text('修改')",
+    "description": "点击test_ai用户的修改按钮"
+  },
+  {
+    "step_id": 23,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "修改用户",
+    "description": "验证弹出修改用户对话框"
+  },
+  {
+    "step_id": 24,
+    "action": "UI_FILL",
+    "element": "昵称输入框",
+    "locator": "input[name='nickName']",
+    "value": "AI测试-已修改",
+    "description": "修改昵称为AI测试-已修改"
+  },
+  {
+    "step_id": 25,
+    "action": "UI_CLICK",
+    "element": "确定按钮",
+    "locator": "button:has-text('确定')",
+    "description": "点击确定按钮提交修改"
+  },
+  {
+    "step_id": 26,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/system/user",
+    "expected_status": 200,
+    "description": "监听PUT/system/user接口返回200"
+  },
+  {
+    "step_id": 27,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "操作成功",
+    "description": "验证页面弹出操作成功提示"
+  },
+  {
+    "step_id": 28,
+    "action": "UI_CLICK",
+    "element": "搜索按钮",
+    "locator": "button:has-text('搜索')",
+    "description": "重新搜索验证修改结果"
+  },
+  {
+    "step_id": 29,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "AI测试-已修改",
+    "description": "验证列表中昵称已更新为AI测试-已修改"
+  },
+  {
+    "step_id": 30,
+    "action": "UI_CLICK",
+    "element": "删除按钮",
+    "locator": "button:has-text('删除')",
+    "description": "点击test_ai用户的删除按钮"
+  },
+  {
+    "step_id": 31,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "是否确认删除",
+    "description": "验证弹出二次确认弹窗"
+  },
+  {
+    "step_id": 32,
+    "action": "UI_CLICK",
+    "element": "确认删除按钮",
+    "locator": "button:has-text('确定')",
+    "description": "在确认弹窗中点击确定"
+  },
+  {
+    "step_id": 33,
+    "action": "NETWORK_WATCH",
+    "api_url_pattern": "/system/user/*",
+    "expected_status": 200,
+    "description": "监听DELETE/system/user接口返回200"
+  },
+  {
+    "step_id": 34,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "操作成功",
+    "description": "验证页面弹出操作成功提示"
+  },
+  {
+    "step_id": 35,
+    "action": "UI_CLICK",
+    "element": "搜索按钮",
+    "locator": "button:has-text('搜索')",
+    "description": "重新搜索验证删除结果"
+  },
+  {
+    "step_id": 36,
+    "action": "UI_CHECK_MSG",
+    "expected_text": "暂无数据",
+    "description": "验证列表中不再存在test_ai用户"
+  }
+]

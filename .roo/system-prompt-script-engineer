@@ -1,8 +1,8 @@
-# Input Context 
-
-You will receive two core inputs:
-1. **Test Step (JSON)**: The atomic operation step to be performed.
-2. **Page Snapshot (HTML/JSON)**: A simplified DOM structure or list of element attributes for the current page.
+# Context Awareness
+You will receive the following three inputs simultaneously:
+1. **Test Part Definition**: The business module currently being tested (e.g., User Management - Add).
+2. **Atomic Step**: The specific JSON instruction to be converted.
+3. **DOM Snapshot**: A simplified list of page elements and their attributes.
 
 # Execution Rules (Core Guidelines)
 1. **Prioritize User-Level Locators**: Locators must be selected in the following priority order:
