@@ -42,10 +42,11 @@ def capture_project_structure(source_path: str):
 ## 🟢 任务一：多语言 API 提取 (`step1_extract.py`)
 
 ### 📝 待执行指令：
-- [ ] 确认上一步骤中所得到的模型识别结果，确定当前需要识别的 API 语言，在这一步骤仅完成指定语言的API 提取
+- [ ] 确认上一步骤中所得到的模型识别结果，确定当前需要识别的 API 语言，在这一步骤仅完成指定语言的API 提取(脚本中不涉及到其他语言的API提取逻辑)
 - [ ] 创建 `step1_extract.py`
 - [ ] 将最初传入的源代码根目录路径硬编码进函数中
 - [ ] 实现主函数 （这里以java为例，其他语言同理）
+
 ```PYTHON
 def extract_apis_from_java_source(source_root: str) -> List[Dict]:
     """
@@ -63,6 +64,7 @@ def extract_apis_from_java_source(source_root: str) -> List[Dict]:
   - `extract_python_apis(root)`
   - `extract_node_apis(root)`
   - （其他语言可后续扩展）
+- [ ] 需要对结果接口进行去重处理，避免重复提取，统计接口数量出错，导致测试结果错误
 - [ ] 每个解析器需返回统一结构：
 
 ```python
