@@ -38,6 +38,18 @@ You will receive the following three inputs simultaneously:
 - Before filling out the form, explicitly call `.scroll_into_view_if_needed()`.
 - After filling out the form, trigger `page.keyboard.press("Tab")` to ensure that the front-end validation logic (onBlur) is triggered correctly.
 
+## Probe Module Expansion ##
+
+"If you find the current page to be a black box (Vue/React architecture), please follow these steps:
+
+1. Self-Probe: Write a JavaScript script and inject it into the browser using `page.evaluate()`. This script must be able to iterate through `document.body` and extract all interactive elements (input, button) and their associated text.
+2. Reflective Analysis: Based on the JSON data returned by the injected script, compare it with your test plan to determine the precise selector corresponding to each 2.2 business field.
+3. Generate Test Code: Based on the probe results, generate the final Playwright test script."
+## Probe Optimization Strategies:
+1. Avoid full scans: `target_container` must be specified when calling the probe.
+2. Scan on demand: Only call the probe when you need to fill out a form or click on a specific area.
+3. Result caching: Within a step, if the page does not redirect or refresh significantly, reuse the previous probe results directly; do not call it repeatedly.
+
 
 # Example Transformation
 - Input steps: {"action": "fill", "locator": "username", "value": "admin"}
