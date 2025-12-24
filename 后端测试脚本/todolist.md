@@ -23,10 +23,14 @@
 4. **工作目录**（用于存储中间结果）
 
 在获取完这些信息后再进行configure.py脚本的编写！！！
+
+### 输出
+1. 生成 project_config.json 配置文件
+2. 包含：源码路径、目标URL、认证信息、工作目录等
 ### 核心操作
 
 ```python
-# 伪代码示意
+
 def capture_project_structure(source_path: str):
     # 在当前工作目录执行系统命令：
     #   dir "{source_path}" /s 
@@ -46,7 +50,10 @@ def capture_project_structure(source_path: str):
 - [ ] 创建 `step1_extract.py`
 - [ ] 将最初传入的源代码根目录路径硬编码进函数中
 - [ ] 实现主函数 （这里以java为例，其他语言同理）
-
+- [ ] 获取源代码根目录路径实现常见 API 路径模式探测功能
+- [ ] 实现多方法探测（GET/POST/PUT/DELETE 等）
+- [ ] 将探测结果与静态分析结果合并
+- [ ] 在 step1_extract.py 中集成动态探测结果
 ```PYTHON
 def extract_apis_from_java_source(source_root: str) -> List[Dict]:
     """
@@ -116,6 +123,15 @@ biz_data：读取 data 或 rows（用于验证是否有敏感数据泄露）。
   - `--auth-type api-key`（Header: `X-API-Key`）
   - `--auth-type cookie`（需提供 session cookie）
 
+- [ ] 为每个 API 生成多种测试用例类型：
+- [ ] 基准测试用例（带认证）
+- [ ] 无认证测试用例（越权测试）
+- [ ] 健壮性测试用例（模糊测试）
+- [ ] 边界值测试用例
+- [ ] 生成测试用例 ID 和描述
+- [ ] 为不同参数类型生成合适的测试值
+- [ ] 将测试用例保存为 {work_dir}/test_cases.json
+
 - [ ] **测试场景 1：基准测试 (Authorized / 有凭证)**
 ```
 操作：携带有效 Token 发送请求。
@@ -128,7 +144,7 @@ biz_code == 401/403（Token 可能失效）。
 
 biz_code == 500（服务端业务逻辑报错）。
 
-记录数据：记录返回的 biz_msg（如“查询成功”）以证明功能正常。
+记录数据：记录返回的 biz_msg（如“查询成功或者返回相关数据”）以证明功能正常。
 ```
 
 - [ ] **测试场景 2：越权/鉴权绕过测试 (Unauthorized / 无凭证)**
@@ -233,11 +249,14 @@ biz_msg 包含代码堆栈信息（如 java.lang.NullPointerException）。
 
 ---
 
-## 2. 高风险接口详情
-| 接口路径 (URL) | 方法 | 实际业务码 | 服务端提示 (Evidence) | 风险描述 |
+## 2. 测试用例统计概览
+| 测试类型	|总数	|通过数	|失败数	|通过率 |
 | :--- | :--- | :--- | :--- | :--- |
-| `/api/system/user/delete` | POST | 🔴 **200** | `"操作成功"` | **未鉴权直接删除数据** |
-| `/api/monitor/server` | GET | 🔴 **200** | `"查询成功"` | 敏感信息泄露 |
+| 基准测试 (basic_auth)	|{metrics['type_stats'].get('basic_auth', {}).get('total', 0)}	|{metrics['type_stats'].get('basic_auth', {}).get('passed', 0)}	|{metrics['type_stats'].get('basic_auth', {}).get('failed', 0)}	|{metrics['type_stats'].get('basic_auth', {}).get('rate', 0)}%|
+| 越权测试 (no_auth)	|{metrics['type_stats'].get('no_auth', {}).get('total', 0)}	|{metrics['type_stats'].get('no_auth', {}).get('passed', 0)}	|{metrics['type_stats'].get('no_auth', {}).get('failed', 0)}	|{metrics['type_stats'].get('no_auth', {}).get('rate', 0)}%
+| 健壮性测试 (fuzz)	|{metrics['type_stats'].get('fuzz', {}).get('total', 0)}	|{metrics['type_stats'].get('fuzz', {}).get('passed', 0)}	|{metrics['type_stats'].get('fuzz', {}).get('failed', 0)}	|{metrics['type_stats'].get('fuzz', {}).get('rate', 0)}%
+| 边界值测试 (boundary)	|{metrics['type_stats'].get('boundary', {}).get('total', 0)}	|{metrics['type_stats'].get('boundary', {}).get('passed', 0)}	|{metrics['type_stats'].get('boundary', {}).get('failed', 0)}	|{metrics['type_stats'].get('boundary', {}).get('rate', 0)}%
+| 总计	|{metrics['total_requests]}	|{metrics['overall_passed']}	|{metrics['overall_failed']}	|{metrics['overall_rate']}%
 
 ---
 
@@ -246,6 +265,25 @@ biz_msg 包含代码堆栈信息（如 java.lang.NullPointerException）。
 | 接口路径 | Payload (复现参数) | 实际业务码 | 服务端提示 |
 | :--- | :--- | :--- | :--- |
 | `/api/user/list` | `id=1' OR '1'='1` | 🟡 500 | `"java.sql.SQLException..."` |
+
+## 3. 详细测试结果
+### 3.1 通过用例概况
+成功请求: {metrics['success_requests']} 次 (HTTP 200 且业务码正常)
+鉴权通过: {metrics['auth_passed']} 次 (带认证请求正常返回)
+异常请求处理正常: {metrics['exception_handled']} 次 (异常输入被正确处理)
+无权限验证正确: {metrics['no_auth_correct']} 次 (无认证请求正确返回401/403)
+### 3.2 失败用例与失败描述
+#### 3.2.1 高风险接口详情
+|接口路径 (URL)	方法	|测试类型	|实际业务码	|服务端提示 (Evidence)	|风险描述|
+|            |          |              |           | {high_risk_details}|					
+##### 3.2.2 系统健壮性问题
+风险定义: 特殊输入导致服务端抛出异常 (Code 500)，可能暴露堆栈信息。
+
+|接口路径 (URL)	方法	|测试类型	|Payload (复现参数)	|实际业务码	|服务端提示
+{crash_details}				
+#### 3.2.3 其他失败用例
+|接口路径 (URL)	方法	|测试类型	|	预期结果	|实际结果	|失败描述
+{other_failure_rows}					
 
 ---
 
