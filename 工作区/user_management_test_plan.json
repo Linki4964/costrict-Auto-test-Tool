@@ -1,0 +1,341 @@
+{
+  "test_plan": {
+    "name": "若依管理系统-用户管理功能测试",
+    "version": "1.0.0",
+    "description": "测试系统管理界面的用户管理功能，包括新增、修改、删除三个核心功能。基于后端SysUserController接口制定计划。",
+    "target_url": "http://192.168.142.146/system/user",
+    "test_environment": {
+      "platform": "PC",
+      "browser": "Chromium",
+      "device": "Desktop"
+    },
+    "test_credentials": {
+      "username": "admin",
+      "password": "admin123"
+    },
+    "backend_api_info": {
+      "controller": "SysUserController",
+      "base_url": "/system/user",
+      "add_api": {
+        "method": "POST",
+        "path": "/system/user",
+        "permission": "system:user:add",
+        "validations": ["用户名必填", "用户名唯一", "手机号唯一", "邮箱唯一", "密码必填"]
+      },
+      "edit_api": {
+        "method": "PUT",
+        "path": "/system/user",
+        "permission": "system:user:edit",
+        "validations": ["用户名必填", "用户名唯一", "手机号唯一", "邮箱唯一"]
+      },
+      "delete_api": {
+        "method": "DELETE",
+        "path": "/system/user/{userIds}",
+        "permission": "system:user:remove",
+        "validations": ["不能删除当前登录用户", "用户必须存在"]
+      }
+    },
+    "test_cases": [
+      {
+        "id": "TC001",
+        "name": "新增用户-成功场景",
+        "function": "新增",
+        "priority": "High",
+        "description": "使用完整有效的数据创建新用户",
+        "preconditions": [
+          "已登录系统",
+          "已进入用户管理页面"
+        ],
+        "steps": [
+          {
+            "step_id": 1,
+            "action": "click",
+            "target": "button:has-text('新增')",
+            "description": "点击新增按钮"
+          },
+          {
+            "step_id": 2,
+            "action": "wait_for_modal",
+            "description": "等待新增用户对话框弹出"
+          },
+          {
+            "step_id": 3,
+            "action": "detect_form_fields",
+            "description": "探测表单字段并填充数据"
+          },
+          {
+            "step_id": 4,
+            "action": "verify_save",
+            "description": "验证保存成功"
+          }
+        ],
+        "test_data": {
+          "用户名": "test_user_unique",
+          "用户昵称": "测试用户",
+          "部门": "研发部",
+          "手机号码": "13800138000",
+          "邮箱": "test@ruoyi.com",
+          "用户性别": "男",
+          "状态": "正常",
+          "岗位": "普通员工",
+          "角色": "普通用户"
+        },
+        "expected_result": "用户创建成功，列表中显示新用户"
+      },
+      {
+        "id": "TC002",
+        "name": "修改用户-成功场景",
+        "function": "修改",
+        "priority": "High",
+        "description": "修改已存在用户的信息",
+        "preconditions": [
+          "已登录系统",
+          "已进入用户管理页面",
+          "存在可修改的用户"
+        ],
+        "steps": [
+          {
+            "step_id": 1,
+            "action": "click_edit_button",
+            "target": "button:has-text('修改')",
+            "description": "点击修改按钮"
+          },
+          {
+            "step_id": 2,
+            "action": "wait_for_modal",
+            "description": "等待修改用户对话框弹出"
+          },
+          {
+            "step_id": 3,
+            "action": "detect_form_fields",
+            "description": "探测表单字段并修改数据"
+          },
+          {
+            "step_id": 4,
+            "action": "verify_save",
+            "description": "验证保存成功"
+          }
+        ],
+        "test_data": {
+          "用户昵称": "修改后的测试用户",
+          "手机号码": "13900139000",
+          "邮箱": "modified@ruoyi.com"
+        },
+        "expected_result": "用户信息修改成功"
+      },
+      {
+        "id": "TC003",
+        "name": "删除用户-成功场景",
+        "function": "删除",
+        "priority": "High",
+        "description": "删除一个已存在的用户",
+        "preconditions": [
+          "已登录系统",
+          "已进入用户管理页面",
+          "存在可删除的用户（非当前登录用户）"
+        ],
+        "steps": [
+          {
+            "step_id": 1,
+            "action": "click_delete_button",
+            "target": "button:has-text('删除')",
+            "description": "点击删除按钮"
+          },
+          {
+            "step_id": 2,
+            "action": "confirm_delete",
+            "description": "确认删除操作"
+          },
+          {
+            "step_id": 3,
+            "action": "verify_delete_success",
+            "description": "验证删除成功"
+          }
+        ],
+        "expected_result": "用户删除成功，列表中不再显示该用户"
+      },
+      {
+        "id": "TC004",
+        "name": "新增用户-必填字段验证",
+        "function": "新增",
+        "priority": "Medium",
+        "description": "验证必填字段的校验",
+        "preconditions": [
+          "已登录系统",
+          "已进入用户管理页面"
+        ],
+        "steps": [
+          {
+            "step_id": 1,
+            "action": "click",
+            "target": "button:has-text('新增')",
+            "description": "点击新增按钮"
+          },
+          {
+            "step_id": 2,
+            "action": "wait_for_modal",
+            "description": "等待新增用户对话框弹出"
+          },
+          {
+            "step_id": 3,
+            "action": "leave_required_fields_empty",
+            "description": "留空必填字段并提交"
+          },
+          {
+            "step_id": 4,
+            "action": "verify_validation_error",
+            "description": "验证显示验证错误"
+          }
+        ],
+        "test_data": {
+          "留空字段": ["用户名", "用户昵称", "部门"]
+        },
+        "expected_result": "显示必填字段错误提示，无法提交"
+      },
+      {
+        "id": "TC005",
+        "name": "新增用户-用户名重复验证",
+        "function": "新增",
+        "priority": "Medium",
+        "description": "验证用户名唯一性校验",
+        "preconditions": [
+          "已登录系统",
+          "已进入用户管理页面",
+          "用户名'admin'已存在"
+        ],
+        "steps": [
+          {
+            "step_id": 1,
+            "action": "click",
+            "target": "button:has-text('新增')",
+            "description": "点击新增按钮"
+          },
+          {
+            "step_id": 2,
+            "action": "fill_duplicate_username",
+            "value": "admin",
+            "description": "填写已存在的用户名"
+          },
+          {
+            "step_id": 3,
+            "action": "click_save",
+            "description": "点击保存"
+          },
+          {
+            "step_id": 4,
+            "action": "verify_error_message",
+            "message": "登录账号已存在",
+            "description": "验证显示唯一性错误"
+          }
+        ],
+        "expected_result": "显示'登录账号已存在'错误提示"
+      },
+      {
+        "id": "TC006",
+        "name": "删除用户-不能删除当前用户",
+        "function": "删除",
+        "priority": "Medium",
+        "description": "验证不能删除当前登录用户",
+        "preconditions": [
+          "已登录系统（admin用户）",
+          "已进入用户管理页面"
+        ],
+        "steps": [
+          {
+            "step_id": 1,
+            "action": "select_admin_user",
+            "description": "选择当前登录用户（admin）"
+          },
+          {
+            "step_id": 2,
+            "action": "click_delete_button",
+            "description": "点击删除按钮"
+          },
+          {
+            "step_id": 3,
+            "action": "confirm_delete",
+            "description": "确认删除操作"
+          },
+          {
+            "step_id": 4,
+            "action": "verify_error_message",
+            "message": "当前用户不能删除",
+            "description": "验证显示错误提示"
+          }
+        ],
+        "expected_result": "显示'当前用户不能删除'错误提示"
+      },
+      {
+        "id": "TC007",
+        "name": "修改用户-验证原有数据回显",
+        "function": "修改",
+        "priority": "Low",
+        "description": "修改用户时验证原有数据正确回显",
+        "preconditions": [
+          "已登录系统",
+          "已进入用户管理页面",
+          "存在测试用户"
+        ],
+        "steps": [
+          {
+            "step_id": 1,
+            "action": "click_edit_button",
+            "description": "点击修改按钮"
+          },
+          {
+            "step_id": 2,
+            "action": "wait_for_modal",
+            "description": "等待修改用户对话框弹出"
+          },
+          {
+            "step_id": 3,
+            "action": "detect_form_fields",
+            "description": "探测表单字段并验证数据回显"
+          },
+          {
+            "step_id": 4,
+            "action": "verify_data_displayed",
+            "description": "验证原有数据正确显示"
+          }
+        ],
+        "expected_result": "表单中正确显示用户的原有数据"
+      },
+      {
+        "id": "TC008",
+        "name": "删除用户-批量删除",
+        "function": "删除",
+        "priority": "Low",
+        "description": "验证批量删除用户功能",
+        "preconditions": [
+          "已登录系统",
+          "已进入用户管理页面",
+          "存在多个可删除的用户"
+        ],
+        "steps": [
+          {
+            "step_id": 1,
+            "action": "select_multiple_users",
+            "count": 2,
+            "description": "选择多个用户"
+          },
+          {
+            "step_id": 2,
+            "action": "click_delete_button",
+            "description": "点击删除按钮"
+          },
+          {
+            "step_id": 3,
+            "action": "confirm_delete",
+            "description": "确认删除操作"
+          },
+          {
+            "step_id": 4,
+            "action": "verify_batch_delete",
+            "description": "验证批量删除成功"
+          }
+        ],
+        "expected_result": "多个用户被成功删除"
+      }
+    ]
+  }
+}

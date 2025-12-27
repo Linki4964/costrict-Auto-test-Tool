@@ -1,0 +1,135 @@
+{
+  "page_info": {
+    "url": "http://192.168.142.146/login?",
+    "timestamp": "2025-12-27T15:02:31.611417",
+    "page_title": "若依管理系统",
+    "has_auto_fill": true,
+    "screenshot": "工作区/login_page_snapshot_v2.png"
+  },
+  "auto_fill_detection": {
+    "detected": true,
+    "username_has_value": true,
+    "username_value": "admin",
+    "password_has_value": true,
+    "password_value": "******",
+    "clearing_method": {
+      "javascript_clear": "document.querySelectorAll('input').forEach(i => i.value='')",
+      "playwright_clear": "locator.fill('')"
+    }
+  },
+  "detected_elements": {
+    "forms": [
+      {
+        "index": 0,
+        "id": null,
+        "name": null,
+        "action": null,
+        "method": null,
+        "class": "el-form login-form",
+        "has_autocomplete": false
+      }
+    ],
+    "inputs": [
+      {
+        "index": 0,
+        "id": null,
+        "name": null,
+        "type": "text",
+        "placeholder": "账号",
+        "class": "el-input__inner",
+        "required": null,
+        "autocomplete": "off",
+        "current_value": "admin"
+      },
+      {
+        "index": 1,
+        "id": null,
+        "name": null,
+        "type": "password",
+        "placeholder": "密码",
+        "class": "el-input__inner",
+        "required": null,
+        "autocomplete": "off",
+        "current_value": "admin123"
+      },
+      {
+        "index": 2,
+        "id": null,
+        "name": null,
+        "type": "checkbox",
+        "placeholder": null,
+        "class": "el-checkbox__original",
+        "required": null,
+        "autocomplete": null,
+        "current_value": ""
+      },
+      {
+        "index": 3,
+        "id": null,
+        "name": null,
+        "type": "text",
+        "placeholder": null,
+        "class": "el-input__inner",
+        "required": null,
+        "autocomplete": "off",
+        "current_value": "#409EFF"
+      }
+    ],
+    "buttons": [
+      {
+        "index": 0,
+        "id": null,
+        "type": "button",
+        "class": "el-button el-button--primary el-button--medium",
+        "text": "登 录",
+        "name": null
+      },
+      {
+        "index": 1,
+        "id": null,
+        "type": "button",
+        "class": "el-button el-color-dropdown__link-btn el-button--text el-button--mini",
+        "text": "清空",
+        "name": null
+      },
+      {
+        "index": 2,
+        "id": null,
+        "type": "button",
+        "class": "el-button el-color-dropdown__btn el-button--default el-button--mini is-plain",
+        "text": "确定",
+        "name": null
+      }
+    ],
+    "links": [],
+    "images": [],
+    "text_elements": []
+  },
+  "key_findings": {
+    "login_form": "form.el-form.login-form",
+    "username_input": "input[placeholder='账号']",
+    "password_input": "input[type='password']",
+    "submit_button": "button:has-text('登 录')",
+    "clear_button": "button:has-text('清空')",
+    "alternative_selectors": {
+      "username": [
+        "input[placeholder='账号']",
+        "input[type='text']:nth-of-type(1)",
+        "input[name='username']",
+        "input[id*='username']"
+      ],
+      "password": [
+        "input[type='password']",
+        "input[name='password']",
+        "input[id*='password']",
+        "input[placeholder*='密码']"
+      ],
+      "submit": [
+        "button:has-text('登 录')",
+        "button:has-text('登录')",
+        "button.el-button--primary",
+        "button[type='submit']"
+      ]
+    }
+  }
+}

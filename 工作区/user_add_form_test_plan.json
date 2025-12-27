@@ -1,0 +1,462 @@
+{
+  "test_plan": {
+    "project_name": "RuoYi-Vue用户管理表单新增功能测试",
+    "test_scope": "用户管理界面的新增表单功能",
+    "base_url": "http://192.168.142.146/system/user",
+    "login_credentials": {
+      "username": "admin",
+      "password": "admin123"
+    },
+    "test_platform": "PC",
+    "test_type": "功能测试",
+    "target_api": {
+      "endpoint": "POST /system/user",
+      "description": "新增用户API"
+    },
+    "form_fields": [
+      {
+        "field_name": "用户昵称",
+        "field_key": "nickName",
+        "field_type": "input",
+        "required": true,
+        "validation": "必填，最多30字符",
+        "test_values": ["测试用户001", "极长昵称测试测试测试测试测试测试测试测试测试测试", ""]
+      },
+      {
+        "field_name": "归属部门",
+        "field_key": "deptId",
+        "field_type": "treeselect",
+        "required": true,
+        "validation": "必填，树形选择器",
+        "test_values": ["选择总部门", "选择子部门"]
+      },
+      {
+        "field_name": "手机号码",
+        "field_key": "phonenumber",
+        "field_type": "input",
+        "required": true,
+        "validation": "必填，11位手机号格式验证",
+        "test_values": ["13800138000", "123", "12345678901234567890", ""]
+      },
+      {
+        "field_name": "邮箱",
+        "field_key": "email",
+        "field_type": "input",
+        "required": false,
+        "validation": "可选，邮箱格式验证，最多50字符",
+        "test_values": ["test@example.com", "invalid-email", ""]
+      },
+      {
+        "field_name": "用户名称",
+        "field_key": "userName",
+        "field_type": "input",
+        "required": true,
+        "validation": "必填，2-20字符",
+        "test_values": ["testuser01", "ab", "极长用户名测试测试测试测试测试测试测试测试", ""]
+      },
+      {
+        "field_name": "用户密码",
+        "field_key": "password",
+        "field_type": "input",
+        "input_type": "password",
+        "required": true,
+        "validation": "必填，5-20字符，无非法字符",
+        "test_values": ["test123", "abc", "12345", "test<123", ""]
+      },
+      {
+        "field_name": "用户性别",
+        "field_key": "sex",
+        "field_type": "select",
+        "required": false,
+        "validation": "可选，下拉选择",
+        "test_values": ["0", "1", "2"]
+      },
+      {
+        "field_name": "状态",
+        "field_key": "status",
+        "field_type": "radio",
+        "required": false,
+        "validation": "可选，单选，默认启用",
+        "test_values": ["0", "1"]
+      },
+      {
+        "field_name": "岗位",
+        "field_key": "postIds",
+        "field_type": "select_multiple",
+        "required": false,
+        "validation": "可选，多选下拉",
+        "test_values": ["select_multiple_posts"]
+      },
+      {
+        "field_name": "角色",
+        "field_key": "roleIds",
+        "field_type": "select_multiple",
+        "required": false,
+        "validation": "可选，多选下拉",
+        "test_values": ["select_multiple_roles"]
+      },
+      {
+        "field_name": "备注",
+        "field_key": "remark",
+        "field_type": "textarea",
+        "required": false,
+        "validation": "可选，文本域",
+        "test_values": ["这是测试备注信息", ""]
+      }
+    ],
+    "test_scenarios": [
+      {
+        "test_case_id": "TC001",
+        "test_case_name": "正常用户新增",
+        "description": "填写所有必填字段，成功创建新用户",
+        "priority": "P1",
+        "preconditions": ["已登录系统", "已进入用户管理页面"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "点击新增按钮",
+            "expected": "弹出新增用户对话框"
+          },
+          {
+            "step": 2,
+            "action": "填写用户昵称",
+            "expected": "输入框接受输入"
+          },
+          {
+            "step": 3,
+            "action": "选择归属部门",
+            "expected": "树形选择器展开，可选项显示"
+          },
+          {
+            "step": 4,
+            "action": "填写手机号码",
+            "expected": "输入框接受有效手机号"
+          },
+          {
+            "step": 5,
+            "action": "填写用户名称",
+            "expected": "输入框接受用户名"
+          },
+          {
+            "step": 6,
+            "action": "填写用户密码",
+            "expected": "密码框接受输入"
+          },
+          {
+            "step": 7,
+            "action": "点击确定按钮",
+            "expected": "提交成功，显示新增成功提示"
+          }
+        ],
+        "test_data": {
+          "nickName": "自动化测试用户001",
+          "deptId": "103",
+          "phonenumber": "13800138001",
+          "userName": "autotest001",
+          "password": "test123456",
+          "sex": "0",
+          "status": "0"
+        },
+        "expected_result": "用户新增成功，列表中显示新用户"
+      },
+      {
+        "test_case_id": "TC002",
+        "test_case_name": "必填字段验证-用户昵称为空",
+        "description": "验证必填字段验证规则",
+        "priority": "P1",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "用户昵称留空",
+            "expected": "显示必填验证错误"
+          },
+          {
+            "step": 2,
+            "action": "点击确定按钮",
+            "expected": "表单验证失败，不提交数据"
+          }
+        ],
+        "expected_result": "显示'用户昵称不能为空'的错误提示"
+      },
+      {
+        "test_case_id": "TC003",
+        "test_case_name": "必填字段验证-用户名称为空",
+        "description": "验证必填字段验证规则",
+        "priority": "P1",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "用户名称留空",
+            "expected": "显示必填验证错误"
+          },
+          {
+            "step": 2,
+            "action": "点击确定按钮",
+            "expected": "表单验证失败，不提交数据"
+          }
+        ],
+        "expected_result": "显示'用户名称不能为空'的错误提示"
+      },
+      {
+        "test_case_id": "TC004",
+        "test_case_name": "必填字段验证-密码为空",
+        "description": "验证必填字段验证规则",
+        "priority": "P1",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "密码留空",
+            "expected": "显示必填验证错误"
+          },
+          {
+            "step": 2,
+            "action": "点击确定按钮",
+            "expected": "表单验证失败，不提交数据"
+          }
+        ],
+        "expected_result": "显示'用户密码不能为空'的错误提示"
+      },
+      {
+        "test_case_id": "TC005",
+        "test_case_name": "必填字段验证-手机号码为空",
+        "description": "验证必填字段验证规则",
+        "priority": "P1",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "手机号码留空",
+            "expected": "显示必填验证错误"
+          },
+          {
+            "step": 2,
+            "action": "点击确定按钮",
+            "expected": "表单验证失败，不提交数据"
+          }
+        ],
+        "expected_result": "显示'请输入正确的手机号码'的错误提示"
+      },
+      {
+        "test_case_id": "TC006",
+        "test_case_name": "必填字段验证-归属部门为空",
+        "description": "验证必填字段验证规则",
+        "priority": "P1",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "归属部门不选择",
+            "expected": "显示必填验证错误"
+          },
+          {
+            "step": 2,
+            "action": "点击确定按钮",
+            "expected": "表单验证失败，不提交数据"
+          }
+        ],
+        "expected_result": "显示'请选择归属部门'的错误提示"
+      },
+      {
+        "test_case_id": "TC007",
+        "test_case_name": "字段长度验证-用户名称过短",
+        "description": "验证用户名称长度验证规则",
+        "priority": "P2",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "用户名称输入1个字符",
+            "expected": "显示长度验证错误"
+          }
+        ],
+        "expected_result": "显示'用户名称长度必须介于 2 和 20 之间'的错误提示"
+      },
+      {
+        "test_case_id": "TC008",
+        "test_case_name": "字段长度验证-密码过短",
+        "description": "验证密码长度验证规则",
+        "priority": "P2",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "密码输入4个字符",
+            "expected": "显示长度验证错误"
+          }
+        ],
+        "expected_result": "显示'用户密码长度必须介于 5 和 20 之间'的错误提示"
+      },
+      {
+        "test_case_id": "TC009",
+        "test_case_name": "字段格式验证-手机号码格式错误",
+        "description": "验证手机号码格式验证规则",
+        "priority": "P2",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "手机号码输入123",
+            "expected": "显示格式验证错误"
+          }
+        ],
+        "expected_result": "显示'请输入正确的手机号码'的错误提示"
+      },
+      {
+        "test_case_id": "TC010",
+        "test_case_name": "字段格式验证-邮箱格式错误",
+        "description": "验证邮箱格式验证规则",
+        "priority": "P2",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "邮箱输入invalid-email",
+            "expected": "显示格式验证错误"
+          }
+        ],
+        "expected_result": "显示'请输入正确的邮箱地址'的错误提示"
+      },
+      {
+        "test_case_id": "TC011",
+        "test_case_name": "非法字符验证-密码包含特殊字符",
+        "description": "验证密码非法字符验证规则",
+        "priority": "P2",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "密码输入test<123",
+            "expected": "显示非法字符验证错误"
+          }
+        ],
+        "expected_result": "显示'不能包含非法字符：< > \" ' \\ |'的错误提示"
+      },
+      {
+        "test_case_id": "TC012",
+        "test_case_name": "完整表单填写-包含可选字段",
+        "description": "填写所有字段，包括可选字段",
+        "priority": "P2",
+        "preconditions": ["已登录系统", "已进入用户管理页面"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "点击新增按钮",
+            "expected": "弹出新增用户对话框"
+          },
+          {
+            "step": 2,
+            "action": "填写所有必填字段和可选字段",
+            "expected": "所有字段接受输入"
+          },
+          {
+            "step": 3,
+            "action": "点击确定按钮",
+            "expected": "提交成功，显示新增成功提示"
+          }
+        ],
+        "test_data": {
+          "nickName": "自动化测试用户002",
+          "deptId": "103",
+          "phonenumber": "13800138002",
+          "email": "autotest002@example.com",
+          "userName": "autotest002",
+          "password": "test123456",
+          "sex": "1",
+          "status": "0",
+          "postIds": [1],
+          "roleIds": [2],
+          "remark": "这是通过自动化测试创建的完整字段用户"
+        },
+        "expected_result": "用户新增成功，列表中显示新用户，所有字段正确保存"
+      },
+      {
+        "test_case_id": "TC013",
+        "test_case_name": "取消新增操作",
+        "description": "验证取消按钮功能",
+        "priority": "P3",
+        "preconditions": ["已登录系统", "已进入用户管理页面", "已打开新增对话框"],
+        "test_steps": [
+          {
+            "step": 1,
+            "action": "填写部分字段",
+            "expected": "字段接受输入"
+          },
+          {
+            "step": 2,
+            "action": "点击取消按钮",
+            "expected": "对话框关闭，数据不保存"
+          }
+        ],
+        "expected_result": "对话框关闭，用户列表无变化"
+      }
+    ],
+    "navigation_steps": [
+      {
+        "step": 1,
+        "action": "打开浏览器，访问登录页面",
+        "locator": "url",
+        "value": "http://192.168.142.146"
+      },
+      {
+        "step": 2,
+        "action": "输入用户名",
+        "locator": "css selector",
+        "value": "input[name='username']"
+      },
+      {
+        "step": 3,
+        "action": "输入密码",
+        "locator": "css selector",
+        "value": "input[name='password']"
+      },
+      {
+        "step": 4,
+        "action": "点击登录按钮",
+        "locator": "css selector",
+        "value": "button[type='submit']"
+      },
+      {
+        "step": 5,
+        "action": "等待页面加载完成",
+        "locator": "wait",
+        "value": "3000"
+      },
+      {
+        "step": 6,
+        "action": "点击系统管理菜单",
+        "locator": "xpath",
+        "value": "//span[contains(text(),'系统管理')]"
+      },
+      {
+        "step": 7,
+        "action": "点击用户管理子菜单",
+        "locator": "xpath",
+        "value": "//span[contains(text(),'用户管理')]"
+      },
+      {
+        "step": 8,
+        "action": "等待用户管理页面加载",
+        "locator": "wait",
+        "value": "2000"
+      }
+    ],
+    "automation_requirements": {
+      "browser": "chromium",
+      "headless": false,
+      "timeout": 30000,
+      "screenshot_on_failure": true,
+      "perception_script_required": true,
+      "detection_scope": ".el-dialog.el-dialog--center",
+      "pre_test_cleanup": true,
+      "post_test_cleanup": true
+    },
+    "report_format": {
+      "include_screenshots": true,
+      "include_api_logs": false,
+      "include_performance_metrics": false
+    }
+  }
+}

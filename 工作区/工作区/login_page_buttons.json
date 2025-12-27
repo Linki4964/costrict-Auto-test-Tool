@@ -1,0 +1,20 @@
+[
+  {
+    "type": "button",
+    "text": "登 录",
+    "className": "el-button el-button--primary el-button--medium",
+    "name": ""
+  },
+  {
+    "type": "button",
+    "text": "清空",
+    "className": "el-button el-color-dropdown__link-btn el-button--text el-button--mini",
+    "name": ""
+  },
+  {
+    "type": "button",
+    "text": "确定",
+    "className": "el-button el-color-dropdown__btn el-button--default el-button--mini is-plain",
+    "name": ""
+  }
+]

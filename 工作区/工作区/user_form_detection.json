@@ -1,0 +1,25 @@
+{
+  "test_info": {
+    "url": "http://192.168.142.146/system/user",
+    "timestamp": "2025-12-27T15:20:37.974929",
+    "page_title": "若依管理系统"
+  },
+  "login_info": {
+    "username": "admin",
+    "password": "admin123",
+    "login_success": true
+  },
+  "detected_elements": {
+    "add_button": null,
+    "modal_selector": null,
+    "form_fields": [],
+    "save_button": null,
+    "cancel_button": null
+  },
+  "form_analysis": {
+    "total_fields": 0,
+    "required_fields": [],
+    "field_types": {}
+  },
+  "error": "未找到新增按钮"
+}

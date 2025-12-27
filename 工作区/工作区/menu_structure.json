@@ -1,0 +1,41 @@
+{
+  "userManagementCount": 4,
+  "userManagementItems": [
+    {
+      "tagName": "DIV",
+      "className": "nest-menu",
+      "innerText": "用户管理",
+      "id": "",
+      "href": "",
+      "parentTag": "UL",
+      "parentClassName": "el-menu el-menu--inline"
+    },
+    {
+      "tagName": "A",
+      "className": "",
+      "innerText": "用户管理",
+      "id": "",
+      "href": "http://192.168.142.146/system/user",
+      "parentTag": "DIV",
+      "parentClassName": "nest-menu"
+    },
+    {
+      "tagName": "LI",
+      "className": "el-menu-item",
+      "innerText": "用户管理",
+      "id": "",
+      "href": "",
+      "parentTag": "A",
+      "parentClassName": ""
+    },
+    {
+      "tagName": "SPAN",
+      "className": "",
+      "innerText": "用户管理",
+      "id": "",
+      "href": "",
+      "parentTag": "LI",
+      "parentClassName": "el-menu-item"
+    }
+  ]
+}
