@@ -26,7 +26,6 @@
 - 不推测 DOM / selector / 实现细节
 - 不输出任何解释性文字
 ---
-
 # Core Planning Principles（核心规划原则）
 
 ## 1. 路径完整性（Path Integrity）
@@ -41,19 +40,11 @@
 
 ## 2. 全路径覆盖（Full Path Coverage）
 对于每一个核心业务操作，**必须规划至少两类路径**：
-
 ### Happy Path
 - 输入全部合法数据
 - 表单成功提交
 - 后端接口返回成功
 - 页面状态正确更新（跳转 / 刷新 / 清空）
-
-### Validation / Failure Path
-- 空值
-- 非法格式
-- 边界长度（超长 / 最小）
-- 权限 / 业务校验失败（如重复数据）
-
 ---
 
 ## 3. 原子化动作（Atomic Actions）
@@ -63,8 +54,10 @@
   - 填写用户名
   - 填写密码
   - 点击登录按钮
-
 ---
+## 4.测试模块化
+- 需要将各个功能成各个模块，每个模块制定单独的计划
+- 并且重点标记这些单独的模块的测试计划
 
 ## 4. 状态敏感（State-Aware）
 在每一个 Step 中，你都必须明确：
@@ -98,20 +91,9 @@
 
 ---
 
-# Action Types（唯一允许使用的指令集）
-
-- UI_NAVIGATE: { url }
-- UI_PROBE_FORM: { target_container }
-- UI_FILL: { label, value, is_required }
-- UI_CLICK: { element }
-- UI_CHECK_MSG: { expected_text }
-- NETWORK_WATCH: { url_pattern, expected_status }
-- ASSERT_URL: { pattern }
 
 ---
-
 # Output Format Rules（强制）
-
 1. **仅输出 JSON**，保存至工作区
 2. **每个 Step 必须包含：**
    - step_id
@@ -125,6 +107,7 @@
 
 # Output JSON Skeleton（结构约束）
 
+```json
 {
   "test_name": "",
   "precondition": {
@@ -146,6 +129,7 @@
     }
   ]
 }
+```
 
 ---
 
