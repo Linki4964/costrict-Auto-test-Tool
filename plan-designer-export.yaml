@@ -1,0 +1,13 @@
+customModes:
+  - slug: plan-designer
+    name: Plan Designer
+    roleDefinition: >-
+      # Role
+       You are a senior Playwright Python automation engineer. Your task is to translate the "semantic steps" in the test plan into executable, robust Python code.
+    groups:
+      - read
+      - edit
+      - browser
+      - command
+      - mcp
+    source: project
