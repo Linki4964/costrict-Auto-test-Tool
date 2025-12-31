@@ -1,0 +1,185 @@
+{
+  "detect_time": "2025-12-30 15:10:42",
+  "page_url": "http://192.168.142.146/login?",
+  "total_elements": 9,
+  "elements": [
+    {
+      "type": "input",
+      "index": 0,
+      "attributes": {
+        "tag": "input",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "class": "el-input__inner",
+        "placeholder": "账号",
+        "value": "admin"
+      },
+      "locators": {
+        "by_class": "el-input__inner",
+        "by_xpath": "//input[contains(@class, 'el-input__inner')]",
+        "by_css": "input.el-input__inner"
+      },
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "type": "input",
+      "index": 1,
+      "attributes": {
+        "tag": "input",
+        "type": "password",
+        "name": "",
+        "id": "",
+        "class": "el-input__inner",
+        "placeholder": "密码",
+        "value": "admin123"
+      },
+      "locators": {
+        "by_class": "el-input__inner",
+        "by_xpath": "//input[contains(@class, 'el-input__inner')]",
+        "by_css": "input.el-input__inner"
+      },
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "type": "input",
+      "index": 2,
+      "attributes": {
+        "tag": "input",
+        "type": "checkbox",
+        "name": "",
+        "id": "",
+        "class": "el-checkbox__original",
+        "placeholder": "",
+        "value": ""
+      },
+      "locators": {
+        "by_class": "el-checkbox__original",
+        "by_xpath": "//input[contains(@class, 'el-checkbox__original')]",
+        "by_css": "input.el-checkbox__original"
+      },
+      "visible": false,
+      "enabled": true
+    },
+    {
+      "type": "input",
+      "index": 3,
+      "attributes": {
+        "tag": "input",
+        "type": "text",
+        "name": "",
+        "id": "",
+        "class": "el-input__inner",
+        "placeholder": "",
+        "value": "#409EFF"
+      },
+      "locators": {
+        "by_class": "el-input__inner",
+        "by_xpath": "//input[contains(@class, 'el-input__inner')]",
+        "by_css": "input.el-input__inner"
+      },
+      "visible": false,
+      "enabled": true
+    },
+    {
+      "type": "button",
+      "index": 0,
+      "attributes": {
+        "tag": "button",
+        "type": "button",
+        "id": "",
+        "class": "el-button el-button--primary el-button--medium",
+        "text": "登 录",
+        "title": ""
+      },
+      "locators": {
+        "by_class": "el-button",
+        "by_xpath": "//button[contains(@class, 'el-button')]",
+        "by_css": "button.el-button"
+      },
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "type": "button",
+      "index": 1,
+      "attributes": {
+        "tag": "button",
+        "type": "button",
+        "id": "",
+        "class": "el-button el-color-dropdown__link-btn el-button--text el-button--mini",
+        "text": "",
+        "title": ""
+      },
+      "locators": {
+        "by_class": "el-button",
+        "by_xpath": "//button[contains(@class, 'el-button')]",
+        "by_css": "button.el-button"
+      },
+      "visible": false,
+      "enabled": true
+    },
+    {
+      "type": "button",
+      "index": 2,
+      "attributes": {
+        "tag": "button",
+        "type": "button",
+        "id": "",
+        "class": "el-button el-color-dropdown__btn el-button--default el-button--mini is-plain",
+        "text": "",
+        "title": ""
+      },
+      "locators": {
+        "by_class": "el-button",
+        "by_xpath": "//button[contains(@class, 'el-button')]",
+        "by_css": "button.el-button"
+      },
+      "visible": false,
+      "enabled": true
+    },
+    {
+      "type": "form",
+      "index": 0,
+      "attributes": {
+        "tag": "form",
+        "id": "",
+        "class": "el-form login-form",
+        "action": "http://192.168.142.146/login?",
+        "method": "get"
+      },
+      "locators": {
+        "by_class": "el-form",
+        "by_xpath": "//form[contains(@class, 'el-form')]",
+        "by_css": "form.el-form"
+      },
+      "visible": true
+    },
+    {
+      "type": "label",
+      "index": 0,
+      "attributes": {
+        "tag": "label",
+        "id": "",
+        "class": "el-checkbox",
+        "for": null,
+        "text": "记住密码"
+      },
+      "locators": {
+        "by_class": "el-checkbox",
+        "by_xpath": "//label[contains(@class, 'el-checkbox')]",
+        "by_css": "label.el-checkbox"
+      },
+      "visible": true
+    }
+  ],
+  "summary": {
+    "input_count": 4,
+    "button_count": 3,
+    "link_count": 0,
+    "form_count": 1,
+    "label_count": 1
+  }
+}

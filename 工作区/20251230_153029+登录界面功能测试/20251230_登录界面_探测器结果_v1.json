@@ -1,0 +1,299 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created_date": "2025-12-30",
+    "page_url": "http://192.168.142.146/login?",
+    "detection_strategy": "multi_selector_fallback"
+  },
+  "page_info": {
+    "title": "登录页面",
+    "type": "auth_page",
+    "platform": "PC"
+  },
+  "detected_elements": {
+    "input_fields": {
+      "username": {
+        "element_type": "input",
+        "purpose": "用户名输入",
+        "selectors": [
+          "input[type='text']",
+          "input[name='username']",
+          "input[name='userName']",
+          "input[placeholder*='用户名']",
+          "input[placeholder*='账号']",
+          "input[placeholder*='User']",
+          "input[placeholder*='Account']",
+          ".username input",
+          "#username",
+          "[class*='user'][class*='name'] input",
+          "[class*='account'] input"
+        ],
+        "attributes_to_check": [
+          "type",
+          "name",
+          "placeholder",
+          "disabled"
+        ],
+        "interactions": [
+          "click",
+          "clear",
+          "type",
+          "focus",
+          "blur"
+        ],
+        "validation_points": [
+          "必填验证",
+          "长度限制",
+          "字符类型限制",
+          "空值验证"
+        ]
+      },
+      "password": {
+        "element_type": "input",
+        "purpose": "密码输入",
+        "selectors": [
+          "input[type='password']",
+          "input[name='password']",
+          "input[placeholder*='密码']",
+          "input[placeholder*='Password']",
+          ".password input",
+          "#password",
+          "[class*='password'] input"
+        ],
+        "attributes_to_check": [
+          "type",
+          "name",
+          "placeholder",
+          "disabled",
+          "maxlength"
+        ],
+        "interactions": [
+          "click",
+          "clear",
+          "type",
+          "focus",
+          "blur"
+        ],
+        "validation_points": [
+          "必填验证",
+          "长度限制",
+          "复杂度要求",
+          "空值验证"
+        ]
+      }
+    },
+    "buttons": {
+      "login_button": {
+        "element_type": "button",
+        "purpose": "登录提交",
+        "selectors": [
+          "button[type='submit']",
+          "button:has-text('登录')",
+          "button:has-text('Login')",
+          ".login-btn",
+          ".submit-btn",
+          "#loginBtn",
+          "#submitBtn",
+          "[class*='login'] button:not([type='button'])"
+        ],
+        "attributes_to_check": [
+          "type",
+          "disabled",
+          "text"
+        ],
+        "interactions": [
+          "click"
+        ],
+        "state_indicators": {
+          "loading": [
+            "[class*='loading']",
+            "span[class*='spin']",
+            "svg[class*='spinner']",
+            "i[class*='loading']"
+          ],
+          "disabled": [
+            "button[disabled]",
+            "button[class*='disabled']"
+          ]
+        }
+      },
+      "logout_button": {
+        "element_type": "button/link",
+        "purpose": "用户登出",
+        "selectors": [
+          ".logout",
+          ".log-out",
+          "button:has-text('退出')",
+          "button:has-text('注销')",
+          "button:has-text('Logout')",
+          "a:has-text('退出')",
+          "a:has-text('注销')",
+          "[class*='user'] button",
+          "[class*='avatar'] button"
+        ],
+        "attributes_to_check": [
+          "href",
+          "onclick"
+        ],
+        "interactions": [
+          "click"
+        ]
+      }
+    },
+    "user_menu": {
+      "element_type": "dropdown",
+      "purpose": "用户菜单入口",
+      "selectors": [
+        ".user-dropdown",
+        ".user-menu",
+        "[class*='user-name']",
+        "[class*='user-info']",
+        "[class*='avatar']",
+        "[class*='profile']"
+      ],
+      "interactions": [
+        "click",
+        "hover"
+      ]
+    },
+    "messages": {
+      "error_messages": {
+        "empty_username": [
+          ".error-message",
+          ".hint-text",
+          "[class*='error']",
+          "[class*='hint']",
+          ".form-item__error",
+          ".el-form-item__error",
+          ".ant-form-item-explain-error"
+        ],
+        "empty_password": [
+          ".error-message",
+          ".hint-text",
+          "[class*='error']",
+          "[class*='hint']",
+          ".form-item__error",
+          ".el-form-item__error",
+          ".ant-form-item-explain-error"
+        ],
+        "invalid_credentials": [
+          ".error-message",
+          ".toast",
+          ".notification",
+          "[class*='error']",
+          "[class*='alert']",
+          ".el-message--error",
+          ".ant-message-error"
+        ],
+        "general_error": [
+          "[class*='toast']",
+          "[class*='message']",
+          "[class*='notification']",
+          "[role='alert']",
+          ".el-message",
+          ".ant-message"
+        ]
+      },
+      "success_messages": {
+        "login_success": [
+          ".success-message",
+          "[class*='toast'][class*='success']",
+          "[class*='message'][class*='success']",
+          ".el-message--success",
+          ".ant-message-success"
+        ]
+      }
+    },
+    "loading_indicators": {
+      "page_loading": [
+        ".loading",
+        "[class*='spin']",
+        "[class*='loader']",
+        "svg[class*='spinner']",
+        ".el-loading-mask",
+        ".ant-spin"
+      ],
+      "button_loading": [
+        "button[class*='loading']",
+        "button i[class*='loading']",
+        "button i[class*='spin']"
+      ]
+    }
+  },
+  "post_login_elements": {
+    "dashboard_indicators": [
+      "[class*='dashboard']",
+      "[class*='home']",
+      "[class*='index']",
+      "[class*='welcome']",
+      "[class*='main']"
+    ],
+    "user_profile": {
+      "selectors": [
+        "[class*='user-info']",
+        "[class*='user-name']",
+        "[class*='avatar']",
+        ".header-right"
+      ],
+      "expected_content": "用户名或用户显示"
+    },
+    "logout_trigger": [
+      "header button[class*='logout']",
+      "header a[class*='logout']",
+      ".user-dropdown [class*='logout']",
+      ".user-menu [class*='logout']"
+    ]
+  },
+  "validation_rules": {
+    "username": {
+      "min_length": 1,
+      "max_length": 50,
+      "required": true,
+      "pattern": "non_empty"
+    },
+    "password": {
+      "min_length": 1,
+      "max_length": 50,
+      "required": true,
+      "pattern": "non_empty"
+    }
+  },
+  "network_expectations": {
+    "login_api": {
+      "method": "POST",
+      "url_patterns": [
+        "/login",
+        "/auth",
+        "/api/login",
+        "/api/auth/login"
+      ],
+      "headers_required": [
+        "Content-Type"
+      ],
+      "body_format": "json_or_form",
+      "success_codes": [200],
+      "error_codes": [400, 401, 403]
+    }
+  },
+  "test_coverage_areas": {
+    "functional": [
+      "正常登录流程",
+      "空输入验证",
+      "错误凭证验证",
+      "登出流程"
+    ],
+    "ui_ux": [
+      "元素可见性",
+      "交互状态",
+      "Loading状态",
+      "错误提示显示",
+      "成功提示显示",
+      "页面跳转"
+    ],
+    "network": [
+      "API请求触发",
+      "响应状态码验证",
+      "请求参数验证"
+    ]
+  }
+}

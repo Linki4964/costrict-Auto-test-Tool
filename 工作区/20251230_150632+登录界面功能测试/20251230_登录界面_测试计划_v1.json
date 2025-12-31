@@ -1,0 +1,397 @@
+{
+  "test_plan_info": {
+    "plan_name": "登录界面功能测试计划",
+    "plan_version": "v1.0",
+    "create_time": "2025-12-30",
+    "target_url": "http://192.168.142.146/login?",
+    "test_scope": "PC端登录功能测试",
+    "test_method": "Selenium自动化测试"
+  },
+  "test_config": {
+    "browser": "Chrome",
+    "test_data": {
+      "valid_credentials": {
+        "username": "admin",
+        "password": "admin123"
+      },
+      "invalid_credentials": {
+        "invalid_username": "wronguser",
+        "invalid_password": "wrongpass",
+        "empty_username": "",
+        "empty_password": ""
+      }
+    },
+    "locators": {
+      "username_input": {
+        "by": "css_selector",
+        "value": "input.el-input__inner[placeholder='账号']",
+        "fallback": "input.el-input__inner"
+      },
+      "password_input": {
+        "by": "css_selector",
+        "value": "input.el-input__inner[placeholder='密码']",
+        "fallback": "input.el-input__inner"
+      },
+      "login_button": {
+        "by": "class_name",
+        "value": "el-button el-button--primary el-button--medium"
+      },
+      "remember_password_label": {
+        "by": "class_name",
+        "value": "el-checkbox"
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "case_id": "TC-LOGIN-001",
+      "case_name": "清除预填信息测试",
+      "priority": "HIGH",
+      "precondition": {
+        "description": "浏览器已打开并访问登录页面",
+        "steps": [
+          {
+            "action": "打开浏览器",
+            "expected": "浏览器启动成功"
+          },
+          {
+            "action": "清除所有Cookies",
+            "expected": "Cookies已清除"
+          },
+          {
+            "action": "访问登录页面",
+            "url": "http://192.168.142.146/login?"
+          }
+        ]
+      },
+      "test_steps": [
+        {
+          "step_id": 1,
+          "action": "检查账号输入框是否为空",
+          "expected_result": {
+            "ui": "输入框value属性为空字符串",
+            "ux": "输入框无预填内容显示"
+          }
+        },
+        {
+          "step_id": 2,
+          "action": "检查密码输入框是否为空",
+          "expected_result": {
+            "ui": "输入框value属性为空字符串",
+            "ux": "输入框无预填内容显示"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "TC-LOGIN-002",
+      "case_name": "正常登录流程测试",
+      "priority": "HIGH",
+      "precondition": {
+        "description": "已清除预填信息，登录页面已加载",
+        "state": "登录页面可交互状态"
+      },
+      "test_steps": [
+        {
+          "step_id": 1,
+          "action": "输入账号: admin",
+          "input_value": "admin",
+          "target_element": "username_input",
+          "expected_result": {
+            "ui": "账号输入框显示admin",
+            "ux": "输入框可正常输入"
+          }
+        },
+        {
+          "step_id": 2,
+          "action": "输入密码: admin123",
+          "input_value": "admin123",
+          "target_element": "password_input",
+          "expected_result": {
+            "ui": "密码输入框内容已填充",
+            "ux": "密码以圆点或星号显示（不可见明文）"
+          }
+        },
+        {
+          "step_id": 3,
+          "action": "点击登录按钮",
+          "target_element": "login_button",
+          "expected_result": {
+            "ui": "显示Loading状态或页面跳转",
+            "ux": "登录按钮显示禁用状态",
+            "network": {
+              "request": "发送登录请求",
+              "expected_status_code": 200
+            }
+          }
+        },
+        {
+          "step_id": 4,
+          "action": "验证登录结果",
+          "expected_result": {
+            "ui": "页面跳转至首页或显示成功提示",
+            "ux": "URL发生变化，包含登录成功标识"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "TC-LOGIN-003",
+      "case_name": "空账号登录测试",
+      "priority": "MEDIUM",
+      "precondition": {
+        "description": "登录页面已加载"
+      },
+      "test_steps": [
+        {
+          "step_id": 1,
+          "action": "清空账号输入框",
+          "target_element": "username_input"
+        },
+        {
+          "step_id": 2,
+          "action": "输入密码: admin123",
+          "input_value": "admin123",
+          "target_element": "password_input"
+        },
+        {
+          "step_id": 3,
+          "action": "点击登录按钮",
+          "target_element": "login_button",
+          "expected_result": {
+            "ui": "显示错误提示：账号不能为空",
+            "ux": "页面不跳转，保持在登录页",
+            "network": {
+              "no_request": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "TC-LOGIN-004",
+      "case_name": "空密码登录测试",
+      "priority": "MEDIUM",
+      "precondition": {
+        "description": "登录页面已加载"
+      },
+      "test_steps": [
+        {
+          "step_id": 1,
+          "action": "输入账号: admin",
+          "input_value": "admin",
+          "target_element": "username_input"
+        },
+        {
+          "step_id": 2,
+          "action": "清空密码输入框",
+          "target_element": "password_input"
+        },
+        {
+          "step_id": 3,
+          "action": "点击登录按钮",
+          "target_element": "login_button",
+          "expected_result": {
+            "ui": "显示错误提示：密码不能为空",
+            "ux": "页面不跳转，保持在登录页"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "TC-LOGIN-005",
+      "case_name": "错误账号密码登录测试",
+      "priority": "MEDIUM",
+      "precondition": {
+        "description": "登录页面已加载"
+      },
+      "test_steps": [
+        {
+          "step_id": 1,
+          "action": "输入错误账号: wronguser",
+          "input_value": "wronguser",
+          "target_element": "username_input"
+        },
+        {
+          "step_id": 2,
+          "action": "输入错误密码: wrongpass",
+          "input_value": "wrongpass",
+          "target_element": "password_input"
+        },
+        {
+          "step_id": 3,
+          "action": "点击登录按钮",
+          "target_element": "login_button",
+          "expected_result": {
+            "ui": "显示错误提示：账号或密码错误",
+            "ux": "页面不跳转，保持在登录页",
+            "network": {
+              "request": "发送登录请求",
+              "expected_status_code": 200,
+              "response_error": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "TC-LOGIN-006",
+      "case_name": "记住密码功能测试",
+      "priority": "LOW",
+      "precondition": {
+        "description": "登录页面已加载"
+      },
+      "test_steps": [
+        {
+          "step_id": 1,
+          "action": "点击'记住密码'复选框",
+          "target_element": "remember_password_label",
+          "expected_result": {
+            "ui": "复选框被选中状态",
+            "ux": "复选框样式变化（显示勾选标记）"
+          }
+        },
+        {
+          "step_id": 2,
+          "action": "输入账号: admin",
+          "input_value": "admin",
+          "target_element": "username_input"
+        },
+        {
+          "step_id": 3,
+          "action": "输入密码: admin123",
+          "input_value": "admin123",
+          "target_element": "password_input"
+        },
+        {
+          "step_id": 4,
+          "action": "点击登录按钮",
+          "target_element": "login_button",
+          "expected_result": {
+            "ui": "登录成功",
+            "ux": "页面跳转"
+          }
+        },
+        {
+          "step_id": 5,
+          "action": "清除Cookies并刷新页面验证",
+          "expected_result": {
+            "ui": "账号和密码输入框为空",
+            "ux": "未保存预填信息"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "TC-LOGIN-007",
+      "case_name": "账号输入框边界值测试",
+      "priority": "MEDIUM",
+      "precondition": {
+        "description": "登录页面已加载"
+      },
+      "test_steps": [
+        {
+          "step_id": 1,
+          "action": "输入超长账号（50个字符）",
+          "input_value": "adminadminadminadminadminadminadminadminadminadminadminadmin",
+          "target_element": "username_input",
+          "expected_result": {
+            "ui": "输入框接受输入",
+            "ux": "字符完整显示"
+          }
+        },
+        {
+          "step_id": 2,
+          "action": "输入密码: admin123",
+          "input_value": "admin123",
+          "target_element": "password_input"
+        },
+        {
+          "step_id": 3,
+          "action": "点击登录按钮",
+          "target_element": "login_button",
+          "expected_result": {
+            "ui": "返回认证失败或成功响应",
+            "ux": "根据系统规则处理"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "TC-LOGIN-008",
+      "case_name": "密码输入框特殊字符测试",
+      "priority": "LOW",
+      "precondition": {
+        "description": "登录页面已加载"
+      },
+      "test_steps": [
+        {
+          "step_id": 1,
+          "action": "输入账号: admin",
+          "input_value": "admin",
+          "target_element": "username_input"
+        },
+        {
+          "step_id": 2,
+          "action": "输入包含特殊字符的密码: admin@#$123",
+          "input_value": "admin@#$123",
+          "target_element": "password_input",
+          "expected_result": {
+            "ui": "输入框接受输入",
+            "ux": "密码以掩码形式显示"
+          }
+        },
+        {
+          "step_id": 3,
+          "action": "点击登录按钮",
+          "target_element": "login_button",
+          "expected_result": {
+            "ui": "提示密码错误或登录失败",
+            "ux": "页面保持在登录页"
+          }
+        }
+      ]
+    }
+  ],
+  "execution_strategy": {
+    "test_execution_order": [
+      "TC-LOGIN-001",
+      "TC-LOGIN-002",
+      "TC-LOGIN-003",
+      "TC-LOGIN-004",
+      "TC-LOGIN-005",
+      "TC-LOGIN-006",
+      "TC-LOGIN-007",
+      "TC-LOGIN-008"
+    ],
+    "retry_policy": {
+      "max_retries": 2,
+      "retry_condition": "网络超时或元素未找到"
+    },
+    "timeout_settings": {
+      "page_load_timeout": 30,
+      "element_wait_timeout": 10,
+      "action_timeout": 5
+    }
+  },
+  "verification_points": {
+    "ui_verification": [
+      "检查页面标题",
+      "检查表单元素存在性",
+      "检查错误提示信息",
+      "检查成功跳转页面"
+    ],
+    "ux_verification": [
+      "检查Loading状态显示",
+      "检查按钮禁用状态",
+      "检查密码掩码显示",
+      "检查输入框焦点状态"
+    ],
+    "network_verification": [
+      "检查登录请求发送",
+      "检查API响应状态码",
+      "检查Cookies设置",
+      "检查会话Token"
+    ]
+  }
+}
