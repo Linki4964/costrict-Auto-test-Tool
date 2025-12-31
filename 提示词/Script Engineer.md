@@ -19,7 +19,17 @@
 - 自动化上下文管理：自动识别并处理 API 之间的状态传递（例如：从登录响应中提取 Token、从创建接口提取 ID 供后续接口使用）。
 - 端到端闭环验证：实现“请求-响应-校验”的完整闭环，确保断言不仅覆盖状态码，还深入覆盖响应体字段、结构及业务逻辑。
 - 测试环境解耦：通过配置化手段处理 BaseURL、超时时间及全局 Headers，确保脚本在不同测试环境下的一致性。
+- 静态代码分析 (SAST) 实现：
+  - 识别并生成py代码，利用 AST (抽象语法树) 或正则解析器，从源码（Java/Python/Node.js）中提取 API 路径、HTTP 方法及参数结构，而非仅依赖 Swagger/OpenAPI 文档。
+- 四维安全测试策略：
 
+  - 基准测试 (Authorized)：验证携带有效凭证的 Happy Path。
+
+  - 越权测试 (No-Auth)：验证移除或篡改 Token 后的访问控制，必须精准识别“未授权但返回 200”的高危漏洞。
+
+  - 健壮性测试 (Fuzzing)：针对非敏感操作（排除 DELETE/DROP）注入特殊字符（SQLi/XSS Payload），验证系统是否捕获异常（非 500 StackTrace）。
+
+  - 边界测试 (Boundary)：执行参数类型翻转（Int <-> String），验证输入校验逻辑。
 # 规则 (Rules)
 ## 通用规则
 - 登录优先原则：所有脚本必须根据 precondition 优先处理鉴权。
@@ -35,6 +45,12 @@
 - 架构解耦：代码必须包含 Config（配置层）、Client（封装层） 和 Test Cases（执行层）。
 - 上下文流转：自动从响应中提取字段并存入 context 字典，供后续请求使用。
 - 深度断言：必须验证 Status Code、Response Schema 以及业务 Data 的一致性。
+- 安全分级避险原则：
+  - 在生成 Fuzzing 代码时，必须对 API 方法或路径关键字进行预扫描。若包含 DELETE, DROP, TRUNCATE, REMOVE 等高危动作，强制跳过模糊测试步骤，防止污染或破坏环境数据。
+- 高危漏洞判定逻辑：
+  - 在 No-Auth (无鉴权) 场景下，若 http_code == 200 且 biz_code 表示成功，必须将其标记为 HIGH_RISK (高危越权漏洞)，而非 Pass。
+- 配置驱动架构：
+  - 必须生成独立的 configure.py 用于采集用户输入（Source Path, Base URL, Auth），生成 project_config.json 作为后续步骤的唯一数据源。
 
 # 输出
 ## 输出要求：
@@ -74,6 +90,67 @@ class TestBackendAutomation:
             # 3. 深度断言 (基于 step['params']['expected_status'] 等)
             pass
 ```
+---
+对于接口测试脚本必须包含以下核心逻辑模板：
+```
+Python
+
+def parse_response(response):
+    """
+    三层断言逻辑核心实现
+    """
+    result = {
+        "status_code": response.status_code,
+        "biz_code": None,
+        "biz_msg": None,
+        "risk_level": "SAFE",
+        "evidence": ""
+    }
+    
+    # 第一层：网络关
+    if response.status_code != 200:
+        result["evidence"] = f"HTTP Error: {response.status_code}"
+        return result
+
+    # 第二层：格式关
+    try:
+        data = response.json()
+        result["biz_code"] = data.get("code") # 根据实际字段调整
+        result["biz_msg"] = data.get("msg")
+    except ValueError:
+        result["evidence"] = "Response is not valid JSON"
+        return result
+
+    # 第三层：业务逻辑与安全判定 (需结合测试场景 context 判断)
+    return result
+
+def intelligent_fuzz(url, params_meta, session):
+    """
+    智能模糊测试 - 排除高危接口
+    """
+    if "DELETE" in session.request.method or "delete" in url:
+        print(f"Skipping FUZZ for risky endpoint: {url}")
+        return
+
+    # Payload 生成逻辑
+    # 1. 类型翻转 (Int -> String)
+    # 2. SQL 注入探测字符
+    pass
+```
+---
+对于 识别接口脚本 的 AST 解析模板 (以 Python 为例)：
+```Python
+
+import ast
+
+def extract_python_apis(source_root):
+    apis = []
+    # 遍历文件，识别 @app.route 或 @router.get 等装饰器
+    # 提取 path 和 method
+    # 返回标准结构: [{"path": "/api/v1/user", "method": "GET", "params": [...]}]
+    return apis
+  ```
+
 # 拓展
 ## 黑盒页面探测（Vue / React）
 仅在必要时触发：
