@@ -1,0 +1,633 @@
+{
+  "plan_id": "FORM_SUBMIT_TEST_001",
+  "plan_name": "RuoYi用户管理表单提交测试计划",
+  "created_time": "2025-12-31T21:12:21Z",
+  "test_environment": {
+    "url": "http://192.168.142.146",
+    "username": "admin",
+    "password": "admin123",
+    "platform": "PC",
+    "test_type": "功能测试"
+  },
+  "test_scope": {
+    "module": "系统管理 > 用户管理",
+    "features": [
+      "新增用户",
+      "修改用户",
+      "删除用户"
+    ]
+  },
+  "test_data": {
+    "valid_user": {
+      "userName": "testuser001",
+      "nickName": "测试用户001",
+      "password": "Test@12345",
+      "deptId": "100",
+      "phonenumber": "13800138000",
+      "email": "test001@example.com",
+      "sex": "0",
+      "status": "0",
+      "remark": "自动化测试用户"
+    },
+    "invalid_data": {
+      "empty_username": "",
+      "short_username": "a",
+      "long_username": "aaaaaaaaaaaaaaaaaaaaa",
+      "empty_password": "",
+      "short_password": "1234",
+      "long_password": "aaaaaaaaaaaaaaaaaaaaa",
+      "invalid_email": "invalid-email",
+      "invalid_phone": "123",
+      "illegal_password": "test<script>123"
+    }
+  },
+  "api_endpoints": {
+    "add_user": {
+      "method": "POST",
+      "url": "/system/user",
+      "description": "新增用户接口"
+    },
+    "update_user": {
+      "method": "PUT",
+      "url": "/system/user",
+      "description": "修改用户接口"
+    },
+    "delete_user": {
+      "method": "DELETE",
+      "url": "/system/user/{userId}",
+      "description": "删除用户接口"
+    }
+  },
+  "form_fields": [
+    {
+      "field_name": "用户名称",
+      "field_id": "userName",
+      "type": "input",
+      "required": true,
+      "validation": {
+        "min_length": 2,
+        "max_length": 20,
+        "pattern": "^[^\\s]+$"
+      },
+      "placeholder": "请输入用户名称"
+    },
+    {
+      "field_name": "用户昵称",
+      "field_id": "nickName",
+      "type": "input",
+      "required": true,
+      "validation": {
+        "max_length": 30
+      },
+      "placeholder": "请输入用户昵称"
+    },
+    {
+      "field_name": "用户密码",
+      "field_id": "password",
+      "type": "password",
+      "required": true,
+      "validation": {
+        "min_length": 5,
+        "max_length": 20,
+        "pattern": "^[^<>\"'|\\\\]+$"
+      },
+      "placeholder": "请输入用户密码",
+      "show_password": true
+    },
+    {
+      "field_name": "归属部门",
+      "field_id": "deptId",
+      "type": "treeselect",
+      "required": true,
+      "placeholder": "请选择归属部门"
+    },
+    {
+      "field_name": "手机号码",
+      "field_id": "phonenumber",
+      "type": "input",
+      "required": true,
+      "validation": {
+        "max_length": 11,
+        "pattern": "^1[3|4|5|6|7|8|9][0-9]\\d{8}$"
+      },
+      "placeholder": "请输入手机号码"
+    },
+    {
+      "field_name": "邮箱",
+      "field_id": "email",
+      "type": "input",
+      "required": false,
+      "validation": {
+        "max_length": 50,
+        "type": "email"
+      },
+      "placeholder": "请输入邮箱"
+    },
+    {
+      "field_name": "用户性别",
+      "field_id": "sex",
+      "type": "select",
+      "required": false,
+      "options": [
+        {"value": "0", "label": "男"},
+        {"value": "1", "label": "女"},
+        {"value": "2", "label": "未知"}
+      ]
+    },
+    {
+      "field_name": "状态",
+      "field_id": "status",
+      "type": "radio",
+      "required": false,
+      "options": [
+        {"value": "0", "label": "正常"},
+        {"value": "1", "label": "停用"}
+      ],
+      "default": "0"
+    },
+    {
+      "field_name": "岗位",
+      "field_id": "postIds",
+      "type": "select",
+      "required": false,
+      "multiple": true,
+      "placeholder": "请选择岗位"
+    },
+    {
+      "field_name": "角色",
+      "field_id": "roleIds",
+      "type": "select",
+      "required": false,
+      "multiple": true,
+      "placeholder": "请选择角色"
+    },
+    {
+      "field_name": "备注",
+      "field_id": "remark",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "请输入内容"
+    }
+  ],
+  "test_cases": [
+    {
+      "case_id": "TC001",
+      "case_name": "新增用户-正常流程",
+      "priority": "P0",
+      "feature": "新增用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "点击左侧状态栏 > 系统管理 > 用户管理",
+          "expected": "成功进入用户管理页面"
+        },
+        {
+          "step": 2,
+          "action": "点击【新增】按钮",
+          "expected": "弹出新增用户对话框，显示所有表单字段"
+        },
+        {
+          "step": 3,
+          "action": "输入用户名称: testuser001",
+          "expected": "用户名称输入框显示输入内容"
+        },
+        {
+          "step": 4,
+          "action": "输入用户昵称: 测试用户001",
+          "expected": "用户昵称输入框显示输入内容"
+        },
+        {
+          "step": 5,
+          "action": "输入用户密码: Test@12345",
+          "expected": "密码输入框显示掩码字符"
+        },
+        {
+          "step": 6,
+          "action": "选择归属部门: 选择第一个部门",
+          "expected": "部门选择项显示选中状态"
+        },
+        {
+          "step": 7,
+          "action": "输入手机号码: 13800138000",
+          "expected": "手机号码输入框显示输入内容"
+        },
+        {
+          "step": 8,
+          "action": "输入邮箱: test001@example.com",
+          "expected": "邮箱输入框显示输入内容"
+        },
+        {
+          "step": 9,
+          "action": "选择用户性别: 男",
+          "expected": "性别下拉框显示'男'"
+        },
+        {
+          "step": 10,
+          "action": "点击【确定】按钮",
+          "expected": "提交成功，对话框关闭，列表刷新，显示新用户"
+        }
+      ],
+      "verification": {
+        "ui_layer": "检查Toast提示'新增成功'",
+        "ux_layer": "Loading状态正常，按钮禁用状态正常",
+        "network_layer": "检查POST /system/user请求返回200状态码"
+      }
+    },
+    {
+      "case_id": "TC002",
+      "case_name": "新增用户-必填字段校验",
+      "priority": "P0",
+      "feature": "新增用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "点击【新增】按钮",
+          "expected": "弹出新增用户对话框"
+        },
+        {
+          "step": 2,
+          "action": "直接点击【确定】按钮（不填写任何字段）",
+          "expected": "所有必填字段显示红色边框和提示信息"
+        }
+      ],
+      "sub_cases": [
+        {
+          "name": "用户名称为空",
+          "action": "用户名称字段留空",
+          "expected_error": "显示'用户名称不能为空'错误提示"
+        },
+        {
+          "name": "用户昵称为空",
+          "action": "用户昵称字段留空",
+          "expected_error": "显示'用户昵称不能为空'错误提示"
+        },
+        {
+          "name": "用户密码为空",
+          "action": "用户密码字段留空",
+          "expected_error": "显示'用户密码不能为空'错误提示"
+        },
+        {
+          "name": "归属部门未选择",
+          "action": "归属部门字段未选择",
+          "expected_error": "显示'请选择归属部门'错误提示"
+        }
+      ]
+    },
+    {
+      "case_id": "TC003",
+      "case_name": "新增用户-用户名称长度校验",
+      "priority": "P1",
+      "feature": "新增用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面",
+        "点击【新增】按钮"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "输入用户名称: 'a'（1个字符）",
+          "expected_error": "显示'用户名称长度必须介于2和20之间'错误提示"
+        },
+        {
+          "step": 2,
+          "action": "输入用户名称: 'aaaaaaaaaaaaaaaaaaaaa'（21个字符）",
+          "expected_error": "显示'用户名称长度必须介于2和20之间'错误提示"
+        },
+        {
+          "step": 3,
+          "action": "输入用户名称: 'testuser'（8个字符）",
+          "expected": "验证通过，无错误提示"
+        }
+      ]
+    },
+    {
+      "case_id": "TC004",
+      "case_name": "新增用户-手机号码格式校验",
+      "priority": "P1",
+      "feature": "新增用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面",
+        "点击【新增】按钮并填写其他必填字段"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "输入手机号码: '123'（非法格式）",
+          "expected_error": "显示'请输入正确的手机号码'错误提示"
+        },
+        {
+          "step": 2,
+          "action": "输入手机号码: '1380013800'（10位）",
+          "expected_error": "显示'请输入正确的手机号码'错误提示"
+        },
+        {
+          "step": 3,
+          "action": "输入手机号码: '1380013800012'（13位）",
+          "expected_error": "显示'请输入正确的手机号码'错误提示"
+        },
+        {
+          "step": 4,
+          "action": "输入手机号码: '13800138000'（11位合法格式）",
+          "expected": "验证通过，无错误提示"
+        }
+      ]
+    },
+    {
+      "case_id": "TC005",
+      "case_name": "新增用户-邮箱格式校验",
+      "priority": "P1",
+      "feature": "新增用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面",
+        "点击【新增】按钮并填写其他必填字段"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "输入邮箱: 'invalid-email'（非法格式）",
+          "expected_error": "显示'请输入正确的邮箱地址'错误提示"
+        },
+        {
+          "step": 2,
+          "action": "输入邮箱: 'valid@example.com'（合法格式）",
+          "expected": "验证通过，无错误提示"
+        }
+      ]
+    },
+    {
+      "case_id": "TC006",
+      "case_name": "新增用户-密码非法字符校验",
+      "priority": "P1",
+      "feature": "新增用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面",
+        "点击【新增】按钮"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "输入用户密码: 'test<script>123'（包含非法字符）",
+          "expected_error": "显示'不能包含非法字符：< > \" \\' \\\\ \\'错误提示"
+        },
+        {
+          "step": 2,
+          "action": "输入用户密码: 'test\"123'（包含非法字符）",
+          "expected_error": "显示'不能包含非法字符：< > \" \\' \\\\ \\'错误提示"
+        },
+        {
+          "step": 3,
+          "action": "输入用户密码: 'test|123'（包含非法字符）",
+          "expected_error": "显示'不能包含非法字符：< > \" \\' \\\\ \\'错误提示"
+        },
+        {
+          "step": 4,
+          "action": "输入用户密码: 'Normal@123'（合法格式）",
+          "expected": "验证通过，无错误提示"
+        }
+      ]
+    },
+    {
+      "case_id": "TC007",
+      "case_name": "修改用户-正常流程",
+      "priority": "P0",
+      "feature": "修改用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面",
+        "已存在至少一个可修改用户"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "选择列表中的一个用户，点击【修改】按钮",
+          "expected": "弹出修改用户对话框，表单预填充该用户信息"
+        },
+        {
+          "step": 2,
+          "action": "修改用户昵称为: 更新后的昵称",
+          "expected": "用户昵称输入框显示更新内容"
+        },
+        {
+          "step": 3,
+          "action": "修改手机号码为: 13900139000",
+          "expected": "手机号码输入框显示更新内容"
+        },
+        {
+          "step": 4,
+          "action": "点击【确定】按钮",
+          "expected": "提交成功，对话框关闭，列表刷新，显示更新后的用户信息"
+        }
+      ],
+      "verification": {
+        "ui_layer": "检查Toast提示'修改成功'",
+        "ux_layer": "Loading状态正常",
+        "network_layer": "检查PUT /system/user请求返回200状态码"
+      }
+    },
+    {
+      "case_id": "TC008",
+      "case_name": "修改用户-必填字段校验",
+      "priority": "P1",
+      "feature": "修改用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面",
+        "选择一个用户，点击【修改】按钮"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "清空用户名称字段",
+          "expected": "用户名称字段显示红色边框和必填提示"
+        },
+        {
+          "step": 2,
+          "action": "清空用户昵称字段",
+          "expected": "用户昵称字段显示红色边框和必填提示"
+        },
+        {
+          "step": 3,
+          "action": "清空归属部门字段",
+          "expected": "归属部门字段显示红色边框和必填提示"
+        },
+        {
+          "step": 4,
+          "action": "点击【确定】按钮",
+          "expected": "不提交成功，显示字段验证错误提示"
+        }
+      ]
+    },
+    {
+      "case_id": "TC009",
+      "case_name": "删除用户-正常流程",
+      "priority": "P0",
+      "feature": "删除用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面",
+        "已存在至少一个可删除用户（非admin用户）"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "选择列表中的一个非admin用户",
+          "expected": "该用户行显示选中状态"
+        },
+        {
+          "step": 2,
+          "action": "点击【删除】按钮",
+          "expected": "弹出确认对话框，提示'是否确认删除用户XX?'"
+        },
+        {
+          "step": 3,
+          "action": "点击确定",
+          "expected": "确认对话框关闭，列表刷新，该用户不再出现在列表中"
+        }
+      ],
+      "verification": {
+        "ui_layer": "检查Toast提示'删除成功'",
+        "ux_layer": "确认对话框正确显示",
+        "network_layer": "检查DELETE /system/user/{userId}请求返回200状态码"
+      }
+    },
+    {
+      "case_id": "TC010",
+      "case_name": "删除用户-批量删除",
+      "priority": "P1",
+      "feature": "删除用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面",
+        "已存在至少两个可删除用户"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "勾选列表中的两个用户",
+          "expected": "两个用户行显示选中状态"
+        },
+        {
+          "step": 2,
+          "action": "点击【删除】按钮",
+          "expected": "弹出确认对话框，提示'是否确认删除选中的用户?'"
+        },
+        {
+          "step": 3,
+          "action": "点击确定",
+          "expected": "确认对话框关闭，列表刷新，删除的用户不再出现在列表中"
+        }
+      ]
+    },
+    {
+      "case_id": "TC011",
+      "case_name": "表单字段-岗位多选",
+      "priority": "P2",
+      "feature": "新增用户",
+      "steps": [
+        {
+          "step": 1,
+          "action": "点击【新增】按钮",
+          "expected": "弹出新增用户对话框"
+        },
+        {
+          "step": 2,
+          "action": "在岗位下拉框中选择多个岗位",
+          "expected": "岗位下拉框显示多个选中项的标签"
+        }
+      ]
+    },
+    {
+      "case_id": "TC012",
+      "case_name": "表单字段-角色多选",
+      "priority": "P2",
+      "feature": "新增用户",
+      "steps": [
+        {
+          "step": 1,
+          "action": "点击【新增】按钮",
+          "expected": "弹出新增用户对话框"
+        },
+        {
+          "step": 2,
+          "action": "在角色下拉框中选择多个角色",
+          "expected": "角色下拉框显示多个选中项的标签"
+        }
+      ]
+    },
+    {
+      "case_id": "TC013",
+      "case_name": "取消按钮-关闭对话框",
+      "priority": "P2",
+      "feature": "新增用户",
+      "steps": [
+        {
+          "step": 1,
+          "action": "点击【新增】按钮",
+          "expected": "弹出新增用户对话框"
+        },
+        {
+          "step": 2,
+          "action": "填写部分字段",
+          "expected": "表单字段显示已填写内容"
+        },
+        {
+          "step": 3,
+          "action": "点击【取消】按钮",
+          "expected": "对话框关闭，不保存数据，表单重置"
+        }
+      ]
+    },
+    {
+      "case_id": "TC014",
+      "case_name": "修改用户-不显示用户名和密码字段",
+      "priority": "P1",
+      "feature": "修改用户",
+      "preconditions": [
+        "用户已登录系统",
+        "进入系统管理 > 用户管理页面"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "选择一个用户，点击【修改】按钮",
+          "expected": "弹出修改用户对话框"
+        },
+        {
+          "step": 2,
+          "action": "检查表单字段",
+          "expected": "不显示用户名称和用户密码字段（仅新增时显示）"
+        }
+      ]
+    }
+  ],
+  "execution_order": [
+    "TC001", "TC002", "TC003", "TC004", "TC005", "TC006",
+    "TC007", "TC008", "TC014",
+    "TC009", "TC010",
+    "TC011", "TC012", "TC013"
+  ],
+  "test_execution_rules": {
+    "login_required": true,
+    "precondition": "必须先登录到系统",
+    "navigation": "通过左侧状态栏：系统管理 > 用户管理进入页面",
+    "cleanup": "测试完成后删除所有测试创建的用户（除admin外）"
+  },
+  "expected_deliverables": [
+    "探测器脚本（获取表单元素）",
+    "测试执行脚本",
+    "探测器结果JSON",
+    "测试报告（MD格式）"
+  ]
+}

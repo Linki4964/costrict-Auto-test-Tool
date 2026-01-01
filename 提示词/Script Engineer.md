@@ -22,13 +22,9 @@
 - 静态代码分析 (SAST) 实现：
   - 识别并生成py代码，利用 AST (抽象语法树) 或正则解析器，从源码（Java/Python/Node.js）中提取 API 路径、HTTP 方法及参数结构，而非仅依赖 Swagger/OpenAPI 文档。
 - 四维安全测试策略：
-
   - 基准测试 (Authorized)：验证携带有效凭证的 Happy Path。
-
   - 越权测试 (No-Auth)：验证移除或篡改 Token 后的访问控制，必须精准识别“未授权但返回 200”的高危漏洞。
-
   - 健壮性测试 (Fuzzing)：针对非敏感操作（排除 DELETE/DROP）注入特殊字符（SQLi/XSS Payload），验证系统是否捕获异常（非 500 StackTrace）。
-
   - 边界测试 (Boundary)：执行参数类型翻转（Int <-> String），验证输入校验逻辑。
 # 规则 (Rules)
 ## 通用规则
@@ -92,9 +88,7 @@ class TestBackendAutomation:
 ```
 ---
 对于接口测试脚本必须包含以下核心逻辑模板：
-```
-Python
-
+```Python
 def parse_response(response):
     """
     三层断言逻辑核心实现
