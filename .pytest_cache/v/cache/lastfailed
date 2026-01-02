@@ -1,0 +1,19 @@
+{
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc001_normal_add_user[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc002_empty_nickname_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc003_empty_username_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc004_empty_password_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc005_empty_dept_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc006_username_min_length_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc007_username_max_length_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc008_password_min_length_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc009_password_max_length_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc010_password_illegal_char_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc011_invalid_phone_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc012_valid_phone_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc013_invalid_email_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc014_valid_email_validation[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc015_all_optional_fields_empty[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc016_all_fields_filled[chromium]": true,
+  "工作区/20260102_131706_前端表单提交测试/20260102_新增功能测试脚本_v1.py::TestAddUserFunction::test_tc021_cancel_operation[chromium]": true
+}

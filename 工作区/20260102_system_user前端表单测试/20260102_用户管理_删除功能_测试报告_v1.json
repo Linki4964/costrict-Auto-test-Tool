@@ -1,0 +1,51 @@
+{
+  "report_info": {
+    "function": "用户管理-删除功能测试",
+    "test_date": "2026-01-02",
+    "test_url": "http://192.168.142.146/system/user",
+    "report_version": "v1",
+    "executor": "AI Auto-Test System"
+  },
+  "test_summary": {
+    "total_cases": 4,
+    "passed": 2,
+    "failed": 2,
+    "blocked": 0,
+    "pass_rate": "50%"
+  },
+  "test_results": [
+    {
+      "case_id": "TC_DEL_001",
+      "title": "正常删除-删除单个用户",
+      "status": "PASSED",
+      "priority": "high",
+      "execution_time": "6.51s"
+    },
+    {
+      "case_id": "TC_DEL_002",
+      "title": "正常删除-批量删除多个用户",
+      "status": "FAILED",
+      "priority": "medium",
+      "error_type": "元素超时",
+      "error_message": "第二批checkbox元素定位超时",
+      "root_cause": "复选框元素在选择后可能被动态重载或索引变化"
+    },
+    {
+      "case_id": "TC_DEL_003",
+      "title": "异常测试-删除超级管理员",
+      "status": "PASSED",
+      "priority": "medium",
+      "execution_time": "约5s"
+    },
+    {
+      "case_id": "TC_DEL_004",
+      "title": "异常测试-取消删除操作",
+      "status": "FAILED",
+      "priority": "low",
+      "error_type": "元素超时",
+      "error_message": "text_content()获取表格行文本超时",
+      "root_cause": "表格行元素可能在操作后重新渲染"
+    }
+  ],
+  "quality_risk": "删除功能测试通过率为50%，部分测试用例因元素定位问题未能执行，存在中等质量风险"
+}

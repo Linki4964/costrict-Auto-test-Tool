@@ -1,0 +1,477 @@
+{
+  "task_info": {
+    "module": "系统管理-用户管理",
+    "function": "新增用户功能",
+    "test_url": "http://192.168.142.146/system/user",
+    "account": "admin",
+    "password": "admin123",
+    "test_type": "PC端功能测试",
+    "created_at": "2026-01-02"
+  },
+  "page_elements": {
+    "login_page": {
+      "username_input": "输入账号",
+      "password_input": "输入密码",
+      "login_button": "点击登录按钮",
+      "menu_system_management": "系统管理",
+      "menu_user_management": "用户管理"
+    },
+    "user_management_page": {
+      "add_button": "新增按钮",
+      "dialog_title": "添加用户",
+      "form_fields": {
+        "nick_name": {
+          "element_type": "input",
+          "selector": "[prop='nickName'] input",
+          "required": true,
+          "max_length": 30,
+          "label": "用户昵称"
+        },
+        "dept_id": {
+          "element_type": "treeselect",
+          "selector": "[prop='deptId'] .vue-treeselect__control",
+          "required": true,
+          "label": "归属部门"
+        },
+        "phonenumber": {
+          "element_type": "input",
+          "selector": "[prop='phonenumber'] input",
+          "max_length": 11,
+          "pattern": "^1[3|4|5|6|7|8|9][0-9]\\d{8}$",
+          "label": "手机号码"
+        },
+        "email": {
+          "element_type": "input",
+          "selector": "[prop='email'] input",
+          "max_length": 50,
+          "type": "email",
+          "label": "邮箱"
+        },
+        "user_name": {
+          "element_type": "input",
+          "selector": "[prop='userName'] input",
+          "required": true,
+          "min_length": 2,
+          "max_length": 20,
+          "label": "用户名称"
+        },
+        "password": {
+          "element_type": "input",
+          "selector": "[prop='password'] input",
+          "required": true,
+          "min_length": 5,
+          "max_length": 20,
+          "type": "password",
+          "label": "用户密码"
+        },
+        "sex": {
+          "element_type": "select",
+          "selector": "[prop='sex'] .el-input__inner",
+          "options": ["0", "1", "2"],
+          "label": "用户性别"
+        },
+        "status": {
+          "element_type": "radio",
+          "selector": "[prop='status'] .el-radio",
+          "default_value": "0",
+          "label": "状态"
+        },
+        "post_ids": {
+          "element_type": "select",
+          "selector": "[prop='postIds'] .el-input__inner",
+          "multiple": true,
+          "label": "岗位"
+        },
+        "role_ids": {
+          "element_type": "select",
+          "selector": "[prop='roleIds'] .el-input__inner",
+          "multiple": true,
+          "label": "角色"
+        },
+        "remark": {
+          "element_type": "textarea",
+          "selector": "[prop='remark'] textarea",
+          "label": "备注"
+        }
+      },
+      "buttons": {
+        "confirm": ".dialog-footer .el-button--primary",
+        "cancel": ".dialog-footer .el-button--default"
+      }
+    }
+  },
+  "api_info": {
+    "add_user": {
+      "url": "/system/user",
+      "method": "POST",
+      "description": "新增用户接口"
+    },
+    "get_user_info": {
+      "url": "/system/user",
+      "method": "GET",
+      "description": "获取新增用户所需信息（岗位、角色列表）"
+    }
+  },
+  "test_plan": {
+    "precondition": {
+      "description": "已登录系统，进入用户管理页面",
+      "steps": [
+        "打开浏览器访问登录页面",
+        "输入用户名：admin",
+        "输入密码：admin123",
+        "点击登录按钮",
+        "等待页面跳转完成",
+        "点击左侧菜单：系统管理",
+        "点击子菜单：用户管理",
+        "验证用户列表页面正常加载"
+      ]
+    },
+    "test_cases": [
+      {
+        "case_id": "TC_ADD_001",
+        "title": "正常新增用户-填写所有必填字段",
+        "priority": "high",
+        "description": "填写所有必填字段提交成功",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户001",
+          "dept_id": "选择第一个部门",
+          "user_name": "testuser001",
+          "password": "Test@12345"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户001",
+          "选择归属部门：选择第一个部门",
+          "输入用户名称：testuser001",
+          "输入用户密码：Test@12345",
+          "点击【确定】按钮",
+          "验证提交成功",
+          "验证对话框关闭",
+          "验证列表中新增用户",
+          "验证成功提示消息"
+        ],
+        "expected_result": {
+          "ui_layer": "显示'新增成功'提示消息，对话框关闭，列表中显示新用户",
+          "ux_layer": "提交按钮显示loading状态，添加成功后按钮恢复正常",
+          "network_layer": "POST请求发送到/system/user，返回200状态码，响应数据包含新增的用户ID"
+        },
+        "verification_points": [
+          "提交成功提示消息显示",
+          "对话框自动关闭",
+          "用户列表刷新并包含新用户",
+          "Network面板中POST请求状态码为200",
+          "响应数据正确"
+        ]
+      },
+      {
+        "case_id": "TC_ADD_002",
+        "title": "正常新增用户-填写所有字段",
+        "priority": "medium",
+        "description": "填写所有（包括选填）字段提交成功",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户002",
+          "dept_id": "选择第一个部门",
+          "phonenumber": "13800138000",
+          "email": "test002@example.com",
+          "user_name": "testuser002",
+          "password": "Test@12345",
+          "sex": "0",
+          "status": "0",
+          "post_ids": ["选择第一个岗位"],
+          "role_ids": ["选择普通用户角色"],
+          "remark": "自动化测试创建的用户"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户002",
+          "选择归属部门：选择第一个部门",
+          "输入手机号码：13800138000",
+          "输入邮箱：test002@example.com",
+          "输入用户名称：testuser002",
+          "输入用户密码：Test@12345",
+          "选择性别：男",
+          "选择状态：正常",
+          "选择岗位：选择第一个岗位",
+          "选择角色：选择普通用户角色",
+          "输入备注：自动化测试创建的用户",
+          "点击【确定】按钮",
+          "验证提交成功"
+        ],
+        "expected_result": {
+          "ui_layer": "显示'新增成功'提示消息，对话框关闭，列表中显示新用户且所有字段正确",
+          "ux_layer": "提交按钮显示loading状态",
+          "network_layer": "POST请求发送到/system/user，返回200状态码"
+        }
+      },
+      {
+        "case_id": "TC_ADD_003",
+        "title": "异常测试-用户昵称为空",
+        "priority": "high",
+        "description": "不填写用户昵称提交，验证必填校验",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "",
+          "dept_id": "选择第一个部门",
+          "user_name": "testuser003",
+          "password": "Test@12345"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "不输入用户昵称（留空）",
+          "选择归属部门",
+          "输入用户名称：testuser003",
+          "输入用户密码：Test@12345",
+          "点击【确定】按钮",
+          "验证表单校验错误提示"
+        ],
+        "expected_result": {
+          "ui_layer": "用户昵称字段下方显示'用户昵称不能为空'错误提示，对话框不关闭，数据不提交",
+          "ux_layer": "表单不提交，焦点定位到用户昵称输入框",
+          "network_layer": "不发送POST请求"
+        }
+      },
+      {
+        "case_id": "TC_ADD_004",
+        "title": "异常测试-用户名称为空",
+        "priority": "high",
+        "description": "不填写用户名称提交，验证必填校验",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户004",
+          "dept_id": "选择第一个部门",
+          "user_name": "",
+          "password": "Test@12345"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户004",
+          "选择归属部门",
+          "不输入用户名称（留空）",
+          "输入用户密码：Test@12345",
+          "点击【确定】按钮",
+          "验证表单校验错误提示"
+        ],
+        "expected_result": {
+          "ui_layer": "用户名称字段下方显示'用户名称不能为空'错误提示",
+          "ux_layer": "表单不提交",
+          "network_layer": "不发送POST请求"
+        }
+      },
+      {
+        "case_id": "TC_ADD_005",
+        "title": "异常测试-用户密码为空",
+        "priority": "high",
+        "description": "不填写用户密码提交，验证必填校验",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户005",
+          "dept_id": "选择第一个部门",
+          "user_name": "testuser005",
+          "password": ""
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户005",
+          "选择归属部门",
+          "输入用户名称：testuser005",
+          "不输入用户密码（留空）",
+          "点击【确定】按钮",
+          "验证表单校验错误提示"
+        ],
+        "expected_result": {
+          "ui_layer": "用户密码字段下方显示'用户密码不能为空'错误提示",
+          "ux_layer": "表单不提交",
+          "network_layer": "不发送POST请求"
+        }
+      },
+      {
+        "case_id": "TC_ADD_006",
+        "title": "边界测试-用户名称少于2字符",
+        "priority": "medium",
+        "description": "用户名称输入1个字符，验证长度限制",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户006",
+          "dept_id": "选择第一个部门",
+          "user_name": "t",
+          "password": "Test@12345"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户006",
+          "选择归属部门",
+          "输入用户名称：t（1个字符）",
+          "输入用户密码：Test@12345",
+          "点击【确定】按钮",
+          "验证表单校验错误提示"
+        ],
+        "expected_result": {
+          "ui_layer": "显示'用户名称长度必须介于 2 和 20 之间'错误提示",
+          "ux_layer": "表单不提交",
+          "network_layer": "不发送POST请求"
+        }
+      },
+      {
+        "case_id": "TC_ADD_007",
+        "title": "边界测试-用户名称超过20字符",
+        "priority": "medium",
+        "description": "用户名称输入21个字符，验证长度限制",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户007",
+          "dept_id": "选择第一个部门",
+          "user_name": "testusernameexceedslength",
+          "password": "Test@12345"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户007",
+          "选择归属部门",
+          "输入用户名称：testusernameexceedslength（21个字符）",
+          "输入用户密码：Test@12345",
+          "点击【确定】按钮",
+          "验证表单校验错误提示"
+        ],
+        "expected_result": {
+          "ui_layer": "显示'用户名称长度必须介于 2 和 20 之间'错误提示",
+          "ux_layer": "表单不提交",
+          "network_layer": "不发送POST请求"
+        }
+      },
+      {
+        "case_id": "TC_ADD_008",
+        "title": "边界测试-用户密码少于5字符",
+        "priority": "medium",
+        "description": "用户密码输入4个字符，验证长度限制",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户008",
+          "dept_id": "选择第一个部门",
+          "user_name": "testuser008",
+          "password": "Test"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户008",
+          "选择归属部门",
+          "输入用户名称：testuser008",
+          "输入用户密码：Test（4个字符）",
+          "点击【确定】按钮",
+          "验证表单校验错误提示"
+        ],
+        "expected_result": {
+          "ui_layer": "显示'用户密码长度必须介于 5 和 20 之间'错误提示",
+          "ux_layer": "表单不提交",
+          "network_layer": "不发送POST请求"
+        }
+      },
+      {
+        "case_id": "TC_ADD_009",
+        "title": "异常测试-用户密码包含非法字符",
+        "priority": "medium",
+        "description": "用户密码包含特殊字符< > \" ' \\ |",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户009",
+          "dept_id": "选择第一个部门",
+          "user_name": "testuser009",
+          "password": "Test<12345"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户009",
+          "选择归属部门",
+          "输入用户名称：testuser009",
+          "输入用户密码：Test<12345（包含<字符）",
+          "点击【确定】按钮",
+          "验证表单校验错误提示"
+        ],
+        "expected_result": {
+          "ui_layer": "显示'不能包含非法字符：< > \" ' \\\\ |'错误提示",
+          "ux_layer": "表单不提交",
+          "network_layer": "不发送POST请求"
+        }
+      },
+      {
+        "case_id": "TC_ADD_010",
+        "title": "异常测试-手机号码格式错误",
+        "priority": "low",
+        "description": "手机号码格式不符合要求",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户010",
+          "dept_id": "选择第一个部门",
+          "user_name": "testuser010",
+          "password": "Test@12345",
+          "phonenumber": "12345"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户010",
+          "选择归属部门",
+          "输入用户名称：testuser010",
+          "输入用户密码：Test@12345",
+          "输入手机号码：12345（格式错误）",
+          "点击【确定】按钮",
+          "验证表单校验错误提示"
+        ],
+        "expected_result": {
+          "ui_layer": "显示'请输入正确的手机号码'错误提示",
+          "ux_layer": "表单不提交",
+          "network_layer": "不发送POST请求"
+        }
+      },
+      {
+        "case_id": "TC_ADD_011",
+        "title": "异常测试-邮箱格式错误",
+        "priority": "low",
+        "description": "邮箱格式不符合要求",
+        "precondition": "已打开新增用户对话框",
+        "test_data": {
+          "nick_name": "测试用户011",
+          "dept_id": "选择第一个部门",
+          "user_name": "testuser011",
+          "password": "Test@12345",
+          "email": "invalid-email"
+        },
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户011",
+          "选择归属部门",
+          "输入用户名称：testuser011",
+          "输入用户密码：Test@12345",
+          "输入邮箱：invalid-email（格式错误）",
+          "点击【确定】按钮",
+          "验证表单校验错误提示"
+        ],
+        "expected_result": {
+          "ui_layer": "显示'请输入正确的邮箱地址'错误提示",
+          "ux_layer": "表单不提交",
+          "network_layer": "不发送POST请求"
+        }
+      },
+      {
+        "case_id": "TC_ADD_012",
+        "title": "正常用户-取消按钮功能",
+        "priority": "low",
+        "description": "点击取消按钮，关闭对话框且不保存数据",
+        "precondition": "已打开新增用户对话框并填写部分数据",
+        "steps": [
+          "点击【新增】按钮",
+          "输入用户昵称：测试用户012",
+          "填写其他必填字段",
+          "点击【取消】按钮",
+          "验证对话框关闭",
+          "验证用户列表无新增"
+        ],
+        "expected_result": {
+          "ui_layer": "对话框关闭，用户列表无新增，无任何数据保存",
+          "ux_layer": "表单关闭，不发送任何请求",
+          "network_layer": "不发送POST请求"
+        }
+      }
+    ]
+  }
+}

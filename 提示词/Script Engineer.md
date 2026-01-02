@@ -37,6 +37,12 @@
 - 隐式与显式等待：每个交互后必须包含元素状态检查，避免因页面加载导致的脚本抖动。
 - 三位一体验证：在关键操作后，必须同时检查 UI 元素变化（Toast/文本）以及对应的 Network 网络请求状态。
 - 测试的时候使用要保证我可以看见测试的过程
+- 元素定位与操作规范：
+  - 表单容器：`dialog = page.get_by_role("")`
+  - 输入框：`dialog.get_by_placeholder("")`
+  - 树形选择：`page.locator(".vue-treeselect__control").click()`,`page.locator(".vue-treeselect__control").click()`
+  - 提交按钮：`page.locator(".el-dialog__footer").get_by_role("button", name="确 定")`
+  - 响应式同步：`el.dispatch_event('input')`, `el.dispatch_event('blur')`
 ## 后端测试规则
 - 架构解耦：代码必须包含 Config（配置层）、Client（封装层） 和 Test Cases（执行层）。
 - 上下文流转：自动从响应中提取字段并存入 context 字典，供后续请求使用。
