@@ -22,9 +22,13 @@
 - 静态代码分析 (SAST) 实现：
   - 识别并生成py代码，利用 AST (抽象语法树) 或正则解析器，从源码（Java/Python/Node.js）中提取 API 路径、HTTP 方法及参数结构，而非仅依赖 Swagger/OpenAPI 文档。
 - 四维安全测试策略：
+
   - 基准测试 (Authorized)：验证携带有效凭证的 Happy Path。
+
   - 越权测试 (No-Auth)：验证移除或篡改 Token 后的访问控制，必须精准识别“未授权但返回 200”的高危漏洞。
+
   - 健壮性测试 (Fuzzing)：针对非敏感操作（排除 DELETE/DROP）注入特殊字符（SQLi/XSS Payload），验证系统是否捕获异常（非 500 StackTrace）。
+
   - 边界测试 (Boundary)：执行参数类型翻转（Int <-> String），验证输入校验逻辑。
 # 规则 (Rules)
 ## 通用规则
@@ -36,13 +40,6 @@
 - 原子化动作映射：将 JSON 中的 action 映射为点击、输入、等待等原子操作。
 - 隐式与显式等待：每个交互后必须包含元素状态检查，避免因页面加载导致的脚本抖动。
 - 三位一体验证：在关键操作后，必须同时检查 UI 元素变化（Toast/文本）以及对应的 Network 网络请求状态。
-- 测试的时候使用要保证我可以看见测试的过程
-- 元素定位与操作规范：
-  - 表单容器：`dialog = page.get_by_role("")`
-  - 输入框：`dialog.get_by_placeholder("")`
-  - 树形选择：`page.locator(".vue-treeselect__control").click()`,`page.locator(".vue-treeselect__control").click()`
-  - 提交按钮：`page.locator(".el-dialog__footer").get_by_role("button", name="确 定")`
-  - 响应式同步：`el.dispatch_event('input')`, `el.dispatch_event('blur')`
 ## 后端测试规则
 - 架构解耦：代码必须包含 Config（配置层）、Client（封装层） 和 Test Cases（执行层）。
 - 上下文流转：自动从响应中提取字段并存入 context 字典，供后续请求使用。
@@ -94,7 +91,9 @@ class TestBackendAutomation:
 ```
 ---
 对于接口测试脚本必须包含以下核心逻辑模板：
-```Python
+```
+Python
+
 def parse_response(response):
     """
     三层断言逻辑核心实现
@@ -170,6 +169,19 @@ def extract_python_apis(source_root):
    - 若页面未跳转，复用上一次探测结果
    - 禁止重复 evaluate()
 
+## 📦 附：工程规范要求
+为了保证测试脚本的开发效率:大部分脚本都使用python编写
+
+
+| 项目 | 要求 |
+|------|------|
+| **错误处理** | 所有脚本必须包含 try-except，避免中断 |
+| **合规声明** | 在 README 和脚本启动时打印：⚠️ 仅限授权测试！ |
+| **依赖管理** | 提供 `requirements.txt` |
+| **可测试性** | 每个核心函数需可独立调用（便于单元测试） |
+| **精简代码** | 避免使用 unnecessary code |
+| **编码兼容** | 尽量去除 UTF-8 编码的内容，在windows下cmd需设置chcp 65001或者使用gbk编码 |
+| **无代码交互**| 脚本中不得有交互式输入，如：input()，所有交互由ai接受用户输入完成 |
 ---
 
 
