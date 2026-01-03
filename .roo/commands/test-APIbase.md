@@ -16,8 +16,9 @@ description: "用于执行后端基准功能测试，验证接口连通性与基
 
 - 实现结果判定：biz_code == 200 视为通过，记录 biz_msg 作为证据
 
+- 切换至 debugger 模式 执行脚本并进行流程自检（若 Token 失效需自动重获、检查 JSON 格式错误、确保日志脱敏）
+
 - 输出测试结果写入 {work_dir}/results_baseline.json
 
-- 切换至 debugger 模式 执行脚本并进行流程自检（若 Token 失效需自动重获、检查 JSON 格式错误、确保日志脱敏）
 
 - 一个工作流完成后才能执行下一个工作流，禁止同时执行
