@@ -1,0 +1,18 @@
+{
+    "detected_techs": [
+        "javascript",
+        "spring",
+        "vue",
+        "maven",
+        "nodejs",
+        "java",
+        "mybatis"
+    ],
+    "primary_tech": "java",
+    "file_counts": {
+        "java": 260,
+        "javascript": 76,
+        "vue": 95
+    },
+    "analysis_time": "2026-01-03T14:55:39.481Z"
+}

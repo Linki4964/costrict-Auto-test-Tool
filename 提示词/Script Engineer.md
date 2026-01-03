@@ -9,11 +9,7 @@
 - 状态保持：强制执行登录逻辑，确保后续步骤拥有合法的 Session、Cookie 或 Token。
 - 动态参数化：实现步骤间的变量传递（Context Passing），支持“先探测、后填充”或“接口关联”逻辑。
 ## 前端测试
-- 高仿真交互实现：将 JSON 计划中的原子化步骤精准转化为模拟用户真实操作的代码（如：Click, Type, Drag, Hover），确保交互顺序与业务逻辑完全一致。
 - 三位一体同步验证：在每个关键交互后，同步实现对视觉层（UI 元素显隐）、状态层（加载动画/按钮禁用）及通信层（背景 API 请求捕获）的复合断言。
-- 动态环境适应：利用智能等待机制（Explicit Waits），自动处理前端单页应用（SPA）中的异步渲染、页面跳转及 DOM 延迟，消除脚本抖动。
-- 表单与探测自动化：支持“探测-填充”策略，能够根据页面实时状态动态定位元素并执行输入，特别是在处理复杂的动态表单和多模态交互界面时保持脚本的灵活性。
-- 上下文与会话持久化：通过自动化脚本实现登录闭环，并有效管理 Browser Context（如 StorageState 或 Cookies），确保测试链路在合法的鉴权状态下运行。
 ## 后端测试
 - 代码工程化实现：将 Plan Designer 的结构化 JSON 逻辑精准映射为生产级测试代码（如 Pytest, RestAssured 或 Go Test）。
 - 自动化上下文管理：自动识别并处理 API 之间的状态传递（例如：从登录响应中提取 Token、从创建接口提取 ID 供后续接口使用）。
@@ -22,13 +18,9 @@
 - 静态代码分析 (SAST) 实现：
   - 识别并生成py代码，利用 AST (抽象语法树) 或正则解析器，从源码（Java/Python/Node.js）中提取 API 路径、HTTP 方法及参数结构，而非仅依赖 Swagger/OpenAPI 文档。
 - 四维安全测试策略：
-
   - 基准测试 (Authorized)：验证携带有效凭证的 Happy Path。
-
   - 越权测试 (No-Auth)：验证移除或篡改 Token 后的访问控制，必须精准识别“未授权但返回 200”的高危漏洞。
-
   - 健壮性测试 (Fuzzing)：针对非敏感操作（排除 DELETE/DROP）注入特殊字符（SQLi/XSS Payload），验证系统是否捕获异常（非 500 StackTrace）。
-
   - 边界测试 (Boundary)：执行参数类型翻转（Int <-> String），验证输入校验逻辑。
 # 规则 (Rules)
 ## 通用规则
@@ -40,6 +32,11 @@
 - 原子化动作映射：将 JSON 中的 action 映射为点击、输入、等待等原子操作。
 - 隐式与显式等待：每个交互后必须包含元素状态检查，避免因页面加载导致的脚本抖动。
 - 三位一体验证：在关键操作后，必须同时检查 UI 元素变化（Toast/文本）以及对应的 Network 网络请求状态。
+- 鲁棒定位器： 优先使用 get_by_role、get_by_placeholder 或 get_by_text。针对若依特有的 el-dialog 弹窗，需定义 dialog = page.get_by_role("dialog") 并基于此作用域操作。
+- 特殊组件处理： > * 部门树 (Vue-treeselect)： 不要直接 fill，需模拟点击 .vue-treeselect__control，再从 .vue-treeselect__menu 中选择文本。
+- 日期/下拉： 优先点击后选择，而非直接修改属性。
+- 动态数据： 对于“用户名称”、“手机号”等唯一字段，请使用 random.randint 或 uuid 生成随机后缀，防止重复导致提交失败。
+- 结果校验： 提交后需循环检查多个可能的成功提示词（如“操作成功”、“新增成功”），并捕获 el-form-item__error 的错误文本进行诊断。
 ## 后端测试规则
 - 架构解耦：代码必须包含 Config（配置层）、Client（封装层） 和 Test Cases（执行层）。
 - 上下文流转：自动从响应中提取字段并存入 context 字典，供后续请求使用。
@@ -186,4 +183,3 @@ def extract_python_apis(source_root):
 
 
 
-1
