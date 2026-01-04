@@ -12,16 +12,27 @@ description: "用于执行后端基准功能测试，验证接口连通性与基
 
 - 实现测试逻辑：携带有效 Token，使用 API 定义中的有效载荷发送标准请求
 
-- **核心实现一：动态唯一性 (Dynamic Uniqueness)**
+- **核心实现一：逆向数据挖掘 (Data Mining)**
+   - 优先遍历所有 `GET` 接口，获取真实的列表数据（如 `rows[0]`）作为“黄金模板”
+   - 将挖掘到的真实数据结构反向更新到内存或 `apis.json` 中，解决静态分析 Payload 不准确的问题
+
+- **核心实现二：智能载荷清洗 (Smart Sanitization)**
+   - 基于挖掘到的模板构造 `POST` 载荷，但**必须**执行清洗：
+   - **清除主键**：将 ID 字段置空，防止覆盖旧数据
+   - **唯一化处理**：修改 name/code 等字段，追加时间戳，防止唯一性冲突
+   - **避开管理员**：若模板源自 Admin 用户，必须重命名，严禁使用 Admin 账号数据进行新增
+
+- **核心实现三：增删闭环 (Create-Delete Loop)**
+   - 使用清洗后的真实载荷执行 `POST`
+   - 获取返回的新 ID，立即执行 `DELETE` 进行环境清理（**强制检查：禁止删除 ID=1**）确保环境纯净
+
+- **核心实现四：动态唯一性 (Dynamic Uniqueness)**
    - 针对 POST 请求，识别 name/code/key 等关键字段，自动追加时间戳后缀，彻底解决重复插入导致的 500 错误
 
-- **核心实现二：管理员保护盾 (Admin Shield)**
+- **核心实现五：管理员保护盾 (Admin Shield)**
    - 在执行 DELETE/PUT 前，强制检查目标 URL 或 ID。若涉及 1/0/admin，**必须跳过测试**
 
-- **核心实现三：生命周期闭环 (Lifecycle Loop)**
-   - 实现 **先增后删**：对于同一资源组，先执行 POST，若成功拿到 ID，立即执行针对该 ID 的 GET 和 DELETE 测试，确保环境纯净
-
-- **核心实现四：自适应请求与响应**
+- **核心实现六：自适应请求与响应**
    - 自动识别 multipart/form-data 构造文件上传流
    - 自动识别二进制流响应（Blob/Excel）并跳过 JSON 解析
 
@@ -29,7 +40,7 @@ description: "用于执行后端基准功能测试，验证接口连通性与基
 
    - 若接口标记为 multipart/form-data，自动构造 files 参数模拟文件上传
 
-   - 若接口标记为 application/json，直接使用 apis.json 中预生成的智能 Smart Payload
+   - 若接口标记为 application/json，直接使用 apis.json 中第一步get获取的数据作为请求体
 
 - 实现自适应响应解析：
 
