@@ -1,0 +1,13 @@
+{
+  "test_info": {
+    "url": "http://192.168.142.146/",
+    "timestamp": "2026-01-04 11:01:46",
+    "login": {
+      "username": "admin",
+      "password": "admin123"
+    }
+  },
+  "form_elements": [],
+  "network_requests": [],
+  "error": "Locator.fill: Timeout 10000ms exceeded.\nCall log:\n  - waiting for get_by_placeholder(\"User name\")\n"
+}

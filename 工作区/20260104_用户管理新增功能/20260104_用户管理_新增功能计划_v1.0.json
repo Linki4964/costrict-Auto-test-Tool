@@ -1,0 +1,401 @@
+{
+  "test_plan": {
+    "module": "用户管理",
+    "feature": "新增功能",
+    "platform": "PC端",
+    "test_type": "功能测试",
+    "config": {
+      "target_url": "http://192.168.142.146/",
+      "username": "admin",
+      "password": "admin123",
+      "browser_mode": "有头模式"
+    },
+    "form_elements": {
+      "add_button": {
+        "selector": "新增按钮",
+        "icon": "el-icon-plus",
+        "permission": "system:user:add"
+      },
+      "dialog": {
+        "selector": "新增用户对话框",
+        "width": "600px"
+      },
+      "fields": [
+        {
+          "name": "用户昵称",
+          "selector": "nickName",
+          "type": "input",
+          "max_length": 30,
+          "required": true
+        },
+        {
+          "name": "归属部门",
+          "selector": "deptId",
+          "type": "treeselect",
+          "required": true
+        },
+        {
+          "name": "手机号码",
+          "selector": "phonenumber",
+          "type": "input",
+          "max_length": 11,
+          "required": true
+        },
+        {
+          "name": "邮箱",
+          "selector": "email",
+          "type": "input",
+          "max_length": 50,
+          "required": true
+        },
+        {
+          "name": "用户名称",
+          "selector": "userName",
+          "type": "input",
+          "max_length": 30,
+          "required": true,
+          "only_for_add": true
+        },
+        {
+          "name": "用户密码",
+          "selector": "password",
+          "type": "input_password",
+          "max_length": 20,
+          "show_password": true,
+          "required": true,
+          "only_for_add": true
+        },
+        {
+          "name": "用户性别",
+          "selector": "sex",
+          "type": "select",
+          "required": false
+        },
+        {
+          "name": "状态",
+          "selector": "status",
+          "type": "radio_group",
+          "required": false
+        },
+        {
+          "name": "岗位",
+          "selector": "postIds",
+          "type": "select_multiple",
+          "required": false
+        },
+        {
+          "name": "角色",
+          "selector": "roleIds",
+          "type": "select_multiple",
+          "required": false
+        },
+        {
+          "name": "备注",
+          "selector": "remark",
+          "type": "textarea",
+          "required": false
+        }
+      ],
+      "buttons": [
+        {
+          "name": "确定",
+          "type": "primary",
+          "action": "submitForm"
+        },
+        {
+          "name": "取消",
+          "type": "default",
+          "action": "cancel"
+        }
+      ]
+    },
+    "test_cases": [
+      {
+        "case_id": "TC001",
+        "name": "正常用例-完整必填项",
+        "priority": "高",
+        "steps": [
+          "登录系统",
+          "点击左侧菜单-系统管理",
+          "点击左侧菜单-用户管理",
+          "点击新增按钮",
+          "填写用户昵称",
+          "选择归属部门",
+          "填写手机号码",
+          "填写邮箱",
+          "填写用户名称",
+          "填写用户密码",
+          "点击确定按钮"
+        ],
+        "expected_result": [
+          "对话框关闭",
+          "用户列表刷新",
+          "显示新增成功提示"
+        ],
+        "verification": {
+          "ui": "检查弹窗提示文本",
+          "network": "检查POST请求",
+          "data": "验证用户是否成功添加到数据库"
+        }
+      },
+      {
+        "case_id": "TC002",
+        "name": "边界值测试-用户名称长度",
+        "priority": "中",
+        "steps": [
+          "打开新增对话框",
+          "填写30字符的用户名称",
+          "点击确定按钮"
+        ],
+        "expected_result": [
+          "新增成功"
+        ],
+        "test_data": {
+          "userName": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      {
+        "case_id": "TC003",
+        "name": "边界值测试-用户密码长度",
+        "priority": "中",
+        "steps": [
+          "打开新增对话框",
+          "填写20字符的密码",
+          "点击确定按钮"
+        ],
+        "expected_result": [
+          "新增成功"
+        ],
+        "test_data": {
+          "password": "aaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      {
+        "case_id": "TC004",
+        "name": "必填项验证-未填写用户名称",
+        "priority": "高",
+        "steps": [
+          "打开新增对话框",
+          "不填写用户名称",
+          "点击确定按钮"
+        ],
+        "expected_result": [
+          "显示验证错误提示",
+          "无法提交"
+        ],
+        "verification": {
+          "ui": "检查错误提示：'用户名称不能为空'"
+        }
+      },
+      {
+        "case_id": "TC005",
+        "name": "必填项验证-未填写用户密码",
+        "priority": "高",
+        "steps": [
+          "打开新增对话框",
+          "不填写用户密码",
+          "点击确定按钮"
+        ],
+        "expected_result": [
+          "显示验证错误提示",
+          "无法提交"
+        ],
+        "verification": {
+          "ui": "检查密码框错误提示"
+        }
+      },
+      {
+        "case_id": "TC006",
+        "name": "必填项验证-未选择归属部门",
+        "priority": "高",
+        "steps": [
+          "打开新增对话框",
+          "不选择归属部门",
+          "点击确定按钮"
+        ],
+        "expected_result": [
+          "显示验证错误提示",
+          "无法提交"
+        ]
+      },
+      {
+        "case_id": "TC007",
+        "name": "功能验证-密码显示切换",
+        "priority": "低",
+        "steps": [
+          "打开新增对话框",
+          "填写用户密码",
+          "点击密码框的眼睛图标",
+          "验证密码是否明文显示",
+          "再次点击密码框的眼睛图标",
+          "验证密码是否密文显示"
+        ],
+        "expected_result": [
+          "可以切换密码显示状态"
+        ],
+        "verification": {
+          "ux": "检查密码框type属性变化"
+        }
+      },
+      {
+        "case_id": "TC008",
+        "name": "功能验证-多选岗位",
+        "priority": "中",
+        "steps": [
+          "打开新增对话框",
+          "在岗位下拉框中选择多个岗位",
+          "查看已选中的岗位"
+        ],
+        "expected_result": [
+          "可以同时选择多个岗位",
+          "已选岗位正确显示"
+        ],
+        "verification": {
+          "ui": "检查多选框选中状态"
+        }
+      },
+      {
+        "case_id": "TC009",
+        "name": "功能验证-多选角色",
+        "priority": "中",
+        "steps": [
+          "打开新增对话框",
+          "在角色下拉框中选择多个角色",
+          "查看已选中的角色"
+        ],
+        "expected_result": [
+          "可以同时选择多个角色",
+          "已选角色正确显示"
+        ],
+        "verification": {
+          "ui": "检查多选框选中状态"
+        }
+      },
+      {
+        "case_id": "TC010",
+        "name": "功能验证-取消按钮",
+        "priority": "低",
+        "steps": [
+          "打开新增对话框",
+          "填写部分信息",
+          "点击取消按钮"
+        ],
+        "expected_result": [
+          "对话框关闭",
+          "已填写的信息不保存"
+        ],
+        "verification": {
+          "ux": "验证对话框关闭且没有提交请求"
+        }
+      },
+      {
+        "case_id": "TC011",
+        "name": "手机号码格式验证",
+        "priority": "中",
+        "steps": [
+          "打开新增对话框",
+          "填写不合法的手机号码",
+          "点击确定按钮"
+        ],
+        "expected_result": [
+          "显示格式错误提示",
+          "无法提交"
+        ],
+        "test_data": [
+          {"phonenumber": "12345", "expected": "错误"},
+          {"phonenumber": "abcdefghijk", "expected": "错误"},
+          {"phonenumber": "13800138000", "expected": "通过"}
+        ]
+      },
+      {
+        "case_id": "TC012",
+        "name": "邮箱格式验证",
+        "priority": "中",
+        "steps": [
+          "打开新增对话框",
+          "填写不合法的邮箱",
+          "点击确定按钮"
+        ],
+        "expected_result": [
+          "显示格式错误提示",
+          "无法提交"
+        ],
+        "test_data": [
+          {"email": "invalid", "expected": "错误"},
+          {"email": "test@", "expected": "错误"},
+          {"email": "test@example.com", "expected": "通过"}
+        ]
+      },
+      {
+        "case_id": "TC013",
+        "name": "正常用例-填写所有字段",
+        "priority": "高",
+        "steps": [
+          "打开新增对话框",
+          "填写用户昵称",
+          "选择归属部门",
+          "填写手机号码",
+          "填写邮箱",
+          "填写用户名称",
+          "填写用户密码",
+          "选择用户性别",
+          "选择状态",
+          "选择岗位",
+          "选择角色",
+          "填写备注",
+          "点击确定按钮"
+        ],
+        "expected_result": [
+          "新增成功",
+          "所有字段正确保存"
+        ],
+        "verification": {
+          "data": "验证数据库中所有字段值"
+        }
+      }
+    ],
+    "api_endpoints": {
+      "add_user": {
+        "method": "POST",
+        "url": "/system/user",
+        "description": "新增用户接口",
+        "request_body": {
+          "userName": "string",
+          "nickName": "string",
+          "password": "string",
+          "deptId": "number",
+          "phonenumber": "string",
+          "email": "string",
+          "sex": "string",
+          "status": "string",
+          "postIds": "array",
+          "roleIds": "array",
+          "remark": "string"
+        },
+        "expected_response": {
+          "code": 200,
+          "msg": "操作成功"
+        }
+      }
+    },
+    "navigation_path": [
+      "系统管理",
+      "用户管理"
+    ],
+    "execution_order": [
+      "TC001",
+      "TC004",
+      "TC005",
+      "TC006",
+      "TC002",
+      "TC003",
+      "TC013",
+      "TC011",
+      "TC012",
+      "TC007",
+      "TC008",
+      "TC009",
+      "TC010"
+    ]
+  }
+}

@@ -9,5 +9,14 @@
     "username": "admin",
     "password": "admin123",
     "login_page_url": "http://192.168.142.146/login?redirect=%2Findex"
+  },
+  "test_scope": {
+    "include": [
+      "http://192.168.142.146/system/user" 
+    ]
+  },
+  "mode": "有头模式"{
+
+  "code":"utf-8"
   }
 }
