@@ -14,14 +14,17 @@ description: "【全自动闭环】一键执行环境配置 -> 智能提取 -> �
         - **智能路径拼接**：严防类路径与方法路径重复拼接
         - **DTO 解析器**：扫描 Java 实体类，提取真实字段名生成 `smart_payload`
         - **上传识别**：检测 `MultipartFile` 参数，标记 `content_type` 为 `multipart/form-data`
+        - **熔断机制**：若提取接口数不合理，立即报错终止流程。
     - **切换至 debugger 模式** 执行脚本，生成包含智能载荷的 `{work_dir}/apis.json`
-- **阶段三：串行自动化测试 (Test Suite)**
+- **阶段三：安全生命周期测试 (Test Suite)**
     - **前提**：仅当阶段二成功且接口数 > 0 时继续。
     - **必须切换至 script engineer 模式** 依次创建以下脚本，**每创建一个脚本后立即切换至 debugger 模式执行**：
-
-   - **必须切换至 script engineer 模式** 依次创建以下脚本，**每创建一个脚本后立即切换至 debugger 模式执行并等待完成，再进行下一步**：
-
-    1.  **基准功能测试 (`step2_1_baseline.py`)**
+    - **必须切换至 script engineer 模式**，脚本需内置以下 **三大安全法则**：
+        1.  **Admin Shield**：严禁对 ID=1/0/admin 执行 DELETE/PUT/Fuzz。
+        2.  **Dynamic Uniqueness**：POST 请求的 name/code 字段必须追加时间戳。
+        3.  **Loop Testing**：同一接口优先测试 POST(Add) -> GET(Verify) -> DELETE(Clean)。
+    - **依次创建并执行以下脚本 (每步完成后切换 Debugger 监控)**：
+    1.  **基准功能测试 (`step2_1_baseline.py`)**含先增后删闭环、自适应 Upload）。
         - 读取 `apis.json`，实现**自适应请求**（自动区分 JSON 与 File Upload）
         - 实现**自适应响应**（自动跳过二进制流解析，仅校验 JSON 状态码）
         - 输出：`{work_dir}/results_baseline.json`

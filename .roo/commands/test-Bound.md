@@ -10,6 +10,9 @@ description: "用于执行后端边界值测试，验证API对极值参数的处
 
 - 创建 step2_4_boundary.py 脚本
 
+- **实现 保护性前置检查**
+   - 对于 PUT/DELETE 接口，若检测到目标 ID 为 1/0/admin，**更换测试目标**
+
 - 实现类型推断与精确测试：
  
    - 解析 smart_payload 中字段的数据类型 (int/str/list)

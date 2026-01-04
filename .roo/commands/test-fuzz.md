@@ -10,6 +10,9 @@ description: "用于执行健壮性模糊测试，检测特殊输入下的系统
 
 - 创建 step2_3_fuzz.py 脚本
 
+- **实现 管理员保护盾 (Admin Shield)**
+   - 严禁对 ID=1/0 或 admin 账户执行 Fuzz，防止破坏高权账号
+   
 - 实现载荷继承：基于 extract 阶段获取的合法 DTO 结构进行字段变异，避免因缺少必要参数导致的无效 NPE
 
 - 实现多态 Fuzz 逻辑：

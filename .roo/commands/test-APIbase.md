@@ -12,6 +12,19 @@ description: "用于执行后端基准功能测试，验证接口连通性与基
 
 - 实现测试逻辑：携带有效 Token，使用 API 定义中的有效载荷发送标准请求
 
+- **核心实现一：动态唯一性 (Dynamic Uniqueness)**
+   - 针对 POST 请求，识别 name/code/key 等关键字段，自动追加时间戳后缀，彻底解决重复插入导致的 500 错误
+
+- **核心实现二：管理员保护盾 (Admin Shield)**
+   - 在执行 DELETE/PUT 前，强制检查目标 URL 或 ID。若涉及 1/0/admin，**必须跳过测试**
+
+- **核心实现三：生命周期闭环 (Lifecycle Loop)**
+   - 实现 **先增后删**：对于同一资源组，先执行 POST，若成功拿到 ID，立即执行针对该 ID 的 GET 和 DELETE 测试，确保环境纯净
+
+- **核心实现四：自适应请求与响应**
+   - 自动识别 multipart/form-data 构造文件上传流
+   - 自动识别二进制流响应（Blob/Excel）并跳过 JSON 解析
+
 - 实现自适应请求发送：
 
    - 若接口标记为 multipart/form-data，自动构造 files 参数模拟文件上传
