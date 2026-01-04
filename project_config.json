@@ -1,0 +1,18 @@
+{
+    "source_path": "D:\\desktop\\AI Coding\\RuoYi-Vue",
+    "base_url": "http://192.168.236.128",
+    "work_dir": "d:\\desktop\\AI Coding\\costrict-Auto-test-Tool",
+    "authentication": {
+        "username": "admin",
+        "password": "admin123",
+        "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImxvZ2luX3VzZXJfa2V5IjoiNzAyYTE3NDUtNzhjYy00ZGJiLWI1ZGYtODZjYTNjZDhiMjA0In0.eIflt3fD6ZLS6Hmb7Ll-rP2xlxBQKfU_aB3ZuR10F3S-nIG4Gs2S71Wp6mnBvf3fXCT4loK7DCGmytok0gIQog",
+        "login_url": "http://192.168.236.128/prod-api/login"
+    },
+    "tech_stack": {
+        "backend": "Java",
+        "language": "Java",
+        "framework": "Spring Boot"
+    },
+    "created_at": "2026-01-04T22:07:12.828727",
+    "config_file": "d:\\desktop\\AI Coding\\costrict-Auto-test-Tool\\project_structure.txt"
+}
