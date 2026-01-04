@@ -1,11 +1,11 @@
 {
   "summary": {
     "total": 42,
-    "passed": 23,
-    "failed": 19,
-    "pass_rate": "54%"
+    "passed": 24,
+    "failed": 18,
+    "pass_rate": "57%"
   },
-  "timestamp": "2026-01-04 22:11:14",
+  "timestamp": "2026-01-04 23:02:57",
   "results": [
     {
       "path": "/monitor/operlog/export",
@@ -326,9 +326,9 @@
       "path": "/system/user/authRole/{userId}",
       "method": "GET",
       "status_code": 200,
-      "biz_code": 500,
-      "biz_msg": "请求参数类型不匹配，参数[userId]要求类型为：'java.lang.Long'，但输入值为：'{userId}'",
-      "pass": false,
+      "biz_code": 200,
+      "biz_msg": "操作成功",
+      "pass": true,
       "is_binary": false
     },
     {
@@ -345,7 +345,7 @@
       "method": "GET",
       "status_code": 200,
       "biz_code": 500,
-      "biz_msg": "请求参数类型不匹配，参数[userId]要求类型为：'java.lang.Integer'，但输入值为：'{userId}'",
+      "biz_msg": "用户不存在",
       "pass": false,
       "is_binary": false
     },
@@ -354,7 +354,7 @@
       "method": "GET",
       "status_code": 200,
       "biz_code": 500,
-      "biz_msg": "请求参数类型不匹配，参数[tableId]要求类型为：'java.lang.Long'，但输入值为：'{tableId}'",
+      "biz_msg": "Cannot invoke \"com.ruoyi.generator.domain.GenTable.getSubTableName()\" because \"table\" is null",
       "pass": false,
       "is_binary": false
     },

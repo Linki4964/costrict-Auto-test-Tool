@@ -5,7 +5,7 @@
     "authentication": {
         "username": "admin",
         "password": "admin123",
-        "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImxvZ2luX3VzZXJfa2V5IjoiNzAyYTE3NDUtNzhjYy00ZGJiLWI1ZGYtODZjYTNjZDhiMjA0In0.eIflt3fD6ZLS6Hmb7Ll-rP2xlxBQKfU_aB3ZuR10F3S-nIG4Gs2S71Wp6mnBvf3fXCT4loK7DCGmytok0gIQog",
+        "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImxvZ2luX3VzZXJfa2V5IjoiMDY5Y2NmYTAtM2VkOS00ZjI4LWE5ZmUtMjc0MmQxYjAzYjZmIn0.lU7i9V6oC3wu4096tnh909GqO38ZCHmShERvNAqtOaOspC4mrN0zF-dDcCz9Z-f01eQbU1OHGOLl2qTmZlTseQ",
         "login_url": "http://192.168.236.128/prod-api/login"
     },
     "tech_stack": {
@@ -13,6 +13,6 @@
         "language": "Java",
         "framework": "Spring Boot"
     },
-    "created_at": "2026-01-04T22:07:12.828727",
+    "created_at": "2026-01-04T22:46:30.715800",
     "config_file": "d:\\desktop\\AI Coding\\costrict-Auto-test-Tool\\project_structure.txt"
 }

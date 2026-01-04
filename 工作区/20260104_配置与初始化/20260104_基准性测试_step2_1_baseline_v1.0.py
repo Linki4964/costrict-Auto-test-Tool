@@ -15,6 +15,7 @@ from io import BytesIO
 # 例如: "/system/user" -> { "userName": "admin", "phonenumber": "158...", ... }
 resource_templates = {}
 created_ids = {}  # 存储创建的资源 ID 用于清理
+id_pool = {}      # 参数名 -> 有效值列表 (e.g., "userId": [101, 102])
 
 
 def refresh_token(base_url, username, password):
@@ -91,7 +92,7 @@ def mine_real_data(base_url, token, api_list):
         
         try:
             # 优先测试 list 接口
-            params = {"pageNum": 1, "pageSize": 1}
+            params = {"pageNum": 1, "pageSize": 5}
             resp = requests.get(url, headers=headers, params=params, timeout=10)
             
             if resp.status_code == 200 and not is_binary_response(resp):
@@ -106,12 +107,24 @@ def mine_real_data(base_url, token, api_list):
                     resource_key = api['path'].replace("/list", "")
                     resource_templates[resource_key] = template
                     success_count += 1
-                    print(f"  [OK] Extracted data template from {api['path']}")
+                    
+                    # 构建 ID 池 - 收集所有有效的 ID 字段
+                    for item in candidates[:3]:  # 只取前3条避免重复过多
+                        for k, v in item.items():
+                            # 收集所有可能是 ID 的字段 (userId, roleId, deptId...)
+                            if k.lower().endswith("id") and v and v not in ['0', 0, None]:
+                                if k not in id_pool:
+                                    id_pool[k] = []
+                                if v not in id_pool[k]:
+                                    id_pool[k].append(v)
+                    
+                    print(f"  [OK] Extracted template & IDs from {api['path']}")
                     
         except Exception as e:
             pass
     
     print(f"\n成功提取 {success_count} 个数据模板")
+    print(f"ID 池构建完成，包含 {len(id_pool)} 种参数类型")
     print("="*60)
 
 
@@ -157,6 +170,42 @@ def generate_smart_payload_from_template(resource_key, original_static_payload):
                 new_payload[key] = f"test_{timestamp}_{random_suffix}"
     
     return new_payload
+
+
+def fill_path_params(url_template):
+    """
+    路径参数填充 - 将 {paramName} 替换为有效值
+    
+    Args:
+        url_template: 包含 {} 占位符的 URL 模板
+    Returns:
+        str: 填充后的完整 URL
+    """
+    # 查找 URL 中的 {xxx}
+    matches = re.findall(r'\{(.*?)\}', url_template)
+    filled_url = url_template
+    
+    for param_name in matches:
+        # 尝试从 ID 池中找
+        valid_values = id_pool.get(param_name)
+        
+        if not valid_values:
+            # 尝试模糊匹配
+            for pool_key, vals in id_pool.items():
+                if param_name.lower() in pool_key.lower():
+                    valid_values = vals
+                    break
+        
+        if valid_values:
+            # 随机选择一个有效值，尽量选择非 1/0 的值
+            filtered = [v for v in valid_values if v not in [1, '1', 0, '0']]
+            val = random.choice(filtered) if filtered else random.choice(valid_values)
+            filled_url = filled_url.replace(f"{{{param_name}}}", str(val))
+        else:
+            # 如果找不到，填一个测试值（可能会导致 404）
+            filled_url = filled_url.replace(f"{{{param_name}}}", "100")
+    
+    return filled_url
 
 
 def enrich_static_payload(payload):
@@ -249,7 +298,9 @@ def run_lifecycle_test(base_url, token, api_list):
         if api['method'] not in ['POST', 'PUT']:
             continue
         
-        url = f"{base_url}/prod-api{api['path']}"
+        # 处理路径参数填充
+        url_template = f"{base_url}/prod-api{api['path']}"
+        url = fill_path_params(url_template)
         
         # 跳过上传和登录接口
         if any(skip in url for skip in ['login', 'register', 'upload', 'import']):
@@ -371,7 +422,9 @@ def run_baseline_test(base_url, token, api_list):
         if api['method'] != 'GET':
             continue
         
-        url = f"{base_url}/prod-api{api['path']}"
+        # 处理路径参数填充
+        url_template = f"{base_url}/prod-api{api['path']}"
+        url = fill_path_params(url_template)
         
         # 跳过已测试过的 list 接口和特殊接口
         if any(skip in url for skip in ['list', 'captcha', 'download', 'upload']):
