@@ -35,7 +35,8 @@ description: "用于执行后端基准功能测试，验证接口连通性与基
 - **核心实现六：自适应请求与响应**
    - 自动识别 multipart/form-data 构造文件上传流
    - 自动识别二进制流响应（Blob/Excel）并跳过 JSON 解析
-
+   - 识别 `GET` 请求将 Payload 转为 Query Params
+   
 - 实现自适应请求发送：
 
    - 若接口标记为 multipart/form-data，自动构造 files 参数模拟文件上传

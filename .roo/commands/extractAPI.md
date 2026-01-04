@@ -12,11 +12,17 @@ description: "用于静态分析源代码，提取API接口定义并生成初始
 
 - 创建 step1_extract.py 脚本，硬编码源码根目录路径
 
-- 实现智能路径拼接：严防类路径与方法路径重复拼接
+- **核心实现一：深度 DTO 解析**
+   - 扫描 Java 实体类与父类（如 BaseEntity），提取真实字段名与类型生成 `smart_payload`，解决参数缺失问题
 
-- 实现 DTO 解析器：实现 parse_dto_fields 函数，通过正则扫描项目中的 Java 实体类文件，提取真实字段名（如 username, deptId）作为 Payload 模板
+- **核心实现二：精准方法识别**
+   - 优化正则逻辑，正确区分 `@GetMapping`, `@PostMapping`, `@PutMapping` 及 `@RequestMapping(method=...)`，严防将 PUT 误判为 POST
 
-- 实现上传接口识别：检测参数中是否包含 MultipartFile，若有则将 content_type 标记为 multipart/form-data
+- **核心实现三：路径参数提取**
+   - 识别 URL 中的占位符（如 `/user/{userId}`），并在 `params` 字段中标记，为后续动态填充做准备
+
+- **核心实现四：上传接口识别**
+   - 检测参数中是否包含 `MultipartFile`，若有则将 content_type 标记为 `multipart/form-data`
 
 - 实现接口去重逻辑（基于 Method + Path）并统一数据结构
 
