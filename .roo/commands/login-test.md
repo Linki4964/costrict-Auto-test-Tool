@@ -1,6 +1,7 @@
 ---
 description: "此命令用于前端登录测试"
 ---
+- 读取`frontend_config.json`配置文件
 - 切换至`plan desinger`
 - 打开`to_do_list/登录测试`读取`登录登录功能测试.md`
 - 根据to_do_list开始测试
