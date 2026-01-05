@@ -1,0 +1,126 @@
+{
+  "test_name": "用户管理-删除功能测试",
+  "precondition": {
+    "authenticated": true,
+    "auth_type": "Cookie",
+    "base_url": "http://192.168.142.146/"
+  },
+  "test_cases": [
+    {
+      "case_name": "正常流程-成功删除用户",
+      "path_type": "happy",
+      "steps": [
+        {
+          "step_id": "1",
+          "description": "访问登录页面",
+          "action": "goto",
+          "params": {
+            "selector": "http://192.168.142.146/login?redirect=%2Findex",
+            "value": "",
+            "expected_status": "page_loaded",
+            "assert_logic": "页面应显示登录表单"
+          }
+        },
+        {
+          "step_id": "2",
+          "description": "点击登录按钮（使用默认凭证）",
+          "action": "click",
+          "params": {
+            "selector": "button[role='button']",
+            "value": "登 录",
+            "expected_status": "button_clicked",
+            "assert_logic": "按钮应可点击并触发登录请求"
+          }
+        },
+        {
+          "step_id": "3",
+          "description": "等待页面跳转到首页",
+          "action": "verify",
+          "params": {
+            "selector": "url",
+            "value": "**/index",
+            "expected_status": "visible",
+            "assert_logic": "URL应包含/index"
+          }
+        },
+        {
+          "step_id": "4",
+          "description": "展开侧边栏系统管理菜单",
+          "action": "click",
+          "params": {
+            "selector": "li:has-text('系统管理')",
+            "value": "",
+            "expected_status": "menu_expanded",
+            "assert_logic": "菜单应展开显示子菜单"
+          }
+        },
+        {
+          "step_id": "5",
+          "description": "点击用户管理菜单项",
+          "action": "click",
+          "params": {
+            "selector": "a:has-text('用户管理')",
+            "value": "",
+            "expected_status": "page_navigated",
+            "assert_logic": "应跳转到用户管理页面"
+          }
+        },
+        {
+          "step_id": "6",
+          "description": "选择要删除的用户（勾选第一个非admin用户）",
+          "action": "click",
+          "params": {
+            "selector": "tbody tr:nth-child(2) .el-checkbox__input",
+            "value": "",
+            "expected_status": "row_selected",
+            "assert_logic": "用户应被选中"
+          }
+        },
+        {
+          "step_id": "7",
+          "description": "点击删除按钮",
+          "action": "click",
+          "params": {
+            "selector": "button:has-text('删除').nth(1)",
+            "value": "",
+            "expected_status": "confirm_dialog_shown",
+            "assert_logic": "应弹出删除确认对话框"
+          }
+        },
+        {
+          "step_id": "8",
+          "description": "在确认对话框中点击确定",
+          "action": "click",
+          "params": {
+            "selector": ".el-message-box button:has-text('确 定')",
+            "value": "",
+            "expected_status": "delete_executed",
+            "assert_logic": "应执行删除操作"
+          }
+        },
+        {
+          "step_id": "9",
+          "description": "验证删除成功提示",
+          "action": "verify",
+          "params": {
+            "selector": "text",
+            "value": "删除成功",
+            "expected_status": "visible",
+            "assert_logic": "应显示成功提示信息（操作成功/删除成功/保存成功）"
+          }
+        },
+        {
+          "step_id": "10",
+          "description": "验证Network请求状态",
+          "action": "verify",
+          "params": {
+            "selector": "api_request",
+            "value": "/system/user",
+            "expected_status": "200",
+            "assert_logic": "删除API请求应返回200状态码"
+          }
+        }
+      ]
+    }
+  ]
+}

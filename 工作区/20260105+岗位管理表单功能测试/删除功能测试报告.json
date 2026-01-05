@@ -1,0 +1,46 @@
+{
+  "module": "岗位管理-删除功能",
+  "test_date": "2026-01-05",
+  "test_url": "http://192.168.142.146/",
+  "total_cases": 3,
+  "passed_cases": 3,
+  "failed_cases": 0,
+  "skip_cases": 0,
+  "pass_rate": 100.0,
+  "test_cases": [
+    {
+      "case_id": "TC001",
+      "case_name": "正常删除单个岗位",
+      "status": "passed",
+      "execute_time": "~4s",
+      "description": "选中单个岗位并删除，验证删除成功"
+    },
+    {
+      "case_id": "TC002",
+      "case_name": "删除岗位-取消删除",
+      "status": "passed",
+      "execute_time": "~4s",
+      "description": "选中岗位后点击删除，在确认对话框点击取消，验证对话框关闭"
+    },
+    {
+      "case_id": "TC003",
+      "case_name": "删除岗位-删除多个",
+      "status": "passed",
+      "execute_time": "~4s",
+      "description": "选中多条岗位记录并批量删除，验证删除成功"
+    }
+  ],
+  "test_summary": {
+    "issues_found": [],
+    "fixes_applied": [
+      "增加了等待页面刷新的时间，确保删除操作生效后再进行验证",
+      "优化了验证逻辑，支持通过表格数据变更来确认删除成功"
+    ],
+    "recommendations": [
+      "删除功能整体稳定，单个和批量删除都正常工作",
+      "取消删除功能正常",
+      "建议后续增加对特殊字符岗位的删除测试",
+      "建议增加对删除前已有关联数据的岗位的删除测试"
+    ]
+  }
+}

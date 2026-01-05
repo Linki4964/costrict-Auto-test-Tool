@@ -1,0 +1,472 @@
+{
+  "test_name": "岗位管理-修改功能测试",
+  "precondition": {
+    "authenticated": true,
+    "auth_type": "Session",
+    "base_url": "http://192.168.142.146/"
+  },
+  "test_cases": [
+    {
+      "case_name": "正常修改岗位信息",
+      "path_type": "happy",
+      "steps": [
+        {
+          "step_id": "1",
+          "description": "导航到登录页面",
+          "action": "goto",
+          "params": {
+            "url": "http://192.168.142.146/login?redirect=%2Findex",
+            "expected_status": "200"
+          }
+        },
+        {
+          "step_id": "2",
+          "description": "点击登录按钮",
+          "action": "click",
+          "params": {
+            "selector": "button[name='登 录']",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "3",
+          "description": "等待页面跳转到首页",
+          "action": "wait_url",
+          "params": {
+            "pattern": "**/index",
+            "timeout": 5000
+          }
+        },
+        {
+          "step_id": "4",
+          "description": "点击系统管理菜单",
+          "action": "click",
+          "params": {
+            "selector": "li:has-text('系统管理')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "5",
+          "description": "点击岗位管理链接",
+          "action": "click",
+          "params": {
+            "selector": "a[name='岗位管理']",
+            "wait_visible": true,
+            "timeout": 5000,
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "6",
+          "description": "选中第一条记录",
+          "action": "click",
+          "params": {
+            "selector": "tr:nth-child(2) .el-checkbox",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "7",
+          "description": "点击修改按钮",
+          "action": "click",
+          "params": {
+            "selector": "button:has-text('修改')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "8",
+          "description": "验证修改对话框显示",
+          "action": "verify",
+          "params": {
+            "selector": "[role='dialog']",
+            "expected_status": "visible"
+          }
+        },
+        {
+          "step_id": "9",
+          "description": "修改岗位名称",
+          "action": "input",
+          "params": {
+            "selector": "input[placeholder='请输入岗位名称']",
+            "value": "修改后岗位_{random_id}",
+            "expected_status": "input_filled"
+          }
+        },
+        {
+          "step_id": "10",
+          "description": "修改岗位状态为停用",
+          "action": "click",
+          "params": {
+            "selector": "label:has-text('停用')",
+            "expected_status": "checked"
+          }
+        },
+        {
+          "step_id": "11",
+          "description": "修改备注",
+          "action": "input",
+          "params": {
+            "selector": "textarea[placeholder='请输入内容']",
+            "value": "修改后的备注信息",
+            "expected_status": "input_filled"
+          }
+        },
+        {
+          "step_id": "12",
+          "description": "点击确定按钮",
+          "action": "click",
+          "params": {
+            "selector": ".dialog-footer button:has-text('确 定')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "13",
+          "description": "验证修改成功提示",
+          "action": "verify",
+          "params": {
+            "selector": "text=修改成功",
+            "expected_status": "visible",
+            "timeout": 2000
+          }
+        },
+        {
+          "step_id": "14",
+          "description": "验证对话框关闭",
+          "action": "verify",
+          "params": {
+            "selector": "[role='dialog']",
+            "expected_status": "hidden"
+          }
+        }
+      ]
+    },
+    {
+      "case_name": "修改岗位-清空必填项校验",
+      "path_type": "validation",
+      "steps": [
+        {
+          "step_id": "1",
+          "description": "导航到登录页面",
+          "action": "goto",
+          "params": {
+            "url": "http://192.168.142.146/login?redirect=%2Findex",
+            "expected_status": "200"
+          }
+        },
+        {
+          "step_id": "2",
+          "description": "点击登录按钮",
+          "action": "click",
+          "params": {
+            "selector": "button[name='登 录']",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "3",
+          "description": "等待页面跳转到首页",
+          "action": "wait_url",
+          "params": {
+            "pattern": "**/index",
+            "timeout": 5000
+          }
+        },
+        {
+          "step_id": "4",
+          "description": "点击系统管理菜单",
+          "action": "click",
+          "params": {
+            "selector": "li:has-text('系统管理')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "5",
+          "description": "点击岗位管理链接",
+          "action": "click",
+          "params": {
+            "selector": "a[name='岗位管理']",
+            "wait_visible": true,
+            "timeout": 5000,
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "6",
+          "description": "选中第一条记录",
+          "action": "click",
+          "params": {
+            "selector": "tr:nth-child(2) .el-checkbox",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "7",
+          "description": "点击修改按钮",
+          "action": "click",
+          "params": {
+            "selector": "button:has-text('修改')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "8",
+          "description": "验证修改对话框显示",
+          "action": "verify",
+          "params": {
+            "selector": "[role='dialog']",
+            "expected_status": "visible"
+          }
+        },
+        {
+          "step_id": "9",
+          "description": "清空岗位名称",
+          "action": "input",
+          "params": {
+            "selector": "input[placeholder='请输入岗位名称']",
+            "value": "",
+            "expected_status": "input_cleared"
+          }
+        },
+        {
+          "step_id": "10",
+          "description": "点击确定按钮",
+          "action": "click",
+          "params": {
+            "selector": ".dialog-footer button:has-text('确 定')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "11",
+          "description": "验证岗位名称必填提示",
+          "action": "verify",
+          "params": {
+            "selector": "text=岗位名称不能为空",
+            "expected_status": "visible"
+          }
+        }
+      ]
+    },
+    {
+      "case_name": "修改岗位-仅修改备注",
+      "path_type": "happy",
+      "steps": [
+        {
+          "step_id": "1",
+          "description": "导航到登录页面",
+          "action": "goto",
+          "params": {
+            "url": "http://192.168.142.146/login?redirect=%2Findex",
+            "expected_status": "200"
+          }
+        },
+        {
+          "step_id": "2",
+          "description": "点击登录按钮",
+          "action": "click",
+          "params": {
+            "selector": "button[name='登 录']",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "3",
+          "description": "等待页面跳转到首页",
+          "action": "wait_url",
+          "params": {
+            "pattern": "**/index",
+            "timeout": 5000
+          }
+        },
+        {
+          "step_id": "4",
+          "description": "点击系统管理菜单",
+          "action": "click",
+          "params": {
+            "selector": "li:has-text('系统管理')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "5",
+          "description": "点击岗位管理链接",
+          "action": "click",
+          "params": {
+            "selector": "a[name='岗位管理']",
+            "wait_visible": true,
+            "timeout": 5000,
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "6",
+          "description": "选中第一条记录",
+          "action": "click",
+          "params": {
+            "selector": "tr:nth-child(2) .el-checkbox",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "7",
+          "description": "点击修改按钮",
+          "action": "click",
+          "params": {
+            "selector": "button:has-text('修改')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "8",
+          "description": "验证修改对话框显示",
+          "action": "verify",
+          "params": {
+            "selector": "[role='dialog']",
+            "expected_status": "visible"
+          }
+        },
+        {
+          "step_id": "9",
+          "description": "仅修改备注",
+          "action": "input",
+          "params": {
+            "selector": "textarea[placeholder='请输入内容']",
+            "value": "仅修改备注_{random_id}",
+            "expected_status": "input_filled"
+          }
+        },
+        {
+          "step_id": "10",
+          "description": "点击确定按钮",
+          "action": "click",
+          "params": {
+            "selector": ".dialog-footer button:has-text('确 定')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "11",
+          "description": "验证修改成功提示",
+          "action": "verify",
+          "params": {
+            "selector": "text=修改成功",
+            "expected_status": "visible",
+            "timeout": 2000
+          }
+        }
+      ]
+    },
+    {
+      "case_name": "修改岗位-切换状态",
+      "path_type": "happy",
+      "steps": [
+        {
+          "step_id": "1",
+          "description": "导航到登录页面",
+          "action": "goto",
+          "params": {
+            "url": "http://192.168.142.146/login?redirect=%2Findex",
+            "expected_status": "200"
+          }
+        },
+        {
+          "step_id": "2",
+          "description": "点击登录按钮",
+          "action": "click",
+          "params": {
+            "selector": "button[name='登 录']",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "3",
+          "description": "等待页面跳转到首页",
+          "action": "wait_url",
+          "params": {
+            "pattern": "**/index",
+            "timeout": 5000
+          }
+        },
+        {
+          "step_id": "4",
+          "description": "点击系统管理菜单",
+          "action": "click",
+          "params": {
+            "selector": "li:has-text('系统管理')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "5",
+          "description": "点击岗位管理链接",
+          "action": "click",
+          "params": {
+            "selector": "a[name='岗位管理']",
+            "wait_visible": true,
+            "timeout": 5000,
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "6",
+          "description": "选中第二条记录",
+          "action": "click",
+          "params": {
+            "selector": "tr:nth-child(3) .el-checkbox",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "7",
+          "description": "点击修改按钮",
+          "action": "click",
+          "params": {
+            "selector": "button:has-text('修改')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "8",
+          "description": "验证修改对话框显示",
+          "action": "verify",
+          "params": {
+            "selector": "[role='dialog']",
+            "expected_status": "visible"
+          }
+        },
+        {
+          "step_id": "9",
+          "description": "切换岗位状态",
+          "action": "click",
+          "params": {
+            "selector": "label:has-text('正常')",
+            "expected_status": "checked"
+          }
+        },
+        {
+          "step_id": "10",
+          "description": "点击确定按钮",
+          "action": "click",
+          "params": {
+            "selector": ".dialog-footer button:has-text('确 定')",
+            "expected_status": "clicked"
+          }
+        },
+        {
+          "step_id": "11",
+          "description": "验证修改成功提示",
+          "action": "verify",
+          "params": {
+            "selector": "text=修改成功",
+            "expected_status": "visible",
+            "timeout": 2000
+          }
+        }
+      ]
+    }
+  ]
+}

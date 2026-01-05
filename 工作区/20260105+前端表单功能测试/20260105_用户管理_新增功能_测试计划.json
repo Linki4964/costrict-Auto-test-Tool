@@ -1,0 +1,192 @@
+{
+  "test_name": "用户管理-新增功能测试",
+  "precondition": {
+    "authenticated": true,
+    "auth_type": "Cookie",
+    "base_url": "http://192.168.142.146/"
+  },
+  "test_cases": [
+    {
+      "case_name": "正常流程-成功新增用户",
+      "path_type": "happy",
+      "steps": [
+        {
+          "step_id": "1",
+          "description": "访问登录页面",
+          "action": "goto",
+          "params": {
+            "selector": "http://192.168.142.146/login?redirect=%2Findex",
+            "value": "",
+            "expected_status": "page_loaded",
+            "assert_logic": "页面应显示登录表单"
+          }
+        },
+        {
+          "step_id": "2",
+          "description": "点击登录按钮（使用默认凭证）",
+          "action": "click",
+          "params": {
+            "selector": "button[role='button']",
+            "value": "登 录",
+            "expected_status": "button_clicked",
+            "assert_logic": "按钮应可点击并触发登录请求"
+          }
+        },
+        {
+          "step_id": "3",
+          "description": "等待页面跳转到首页",
+          "action": "verify",
+          "params": {
+            "selector": "url",
+            "value": "**/index",
+            "expected_status": "visible",
+            "assert_logic": "URL应包含/index"
+          }
+        },
+        {
+          "step_id": "4",
+          "description": "展开侧边栏系统管理菜单",
+          "action": "click",
+          "params": {
+            "selector": "li:has-text('系统管理')",
+            "value": "",
+            "expected_status": "menu_expanded",
+            "assert_logic": "菜单应展开显示子菜单"
+          }
+        },
+        {
+          "step_id": "5",
+          "description": "点击用户管理菜单项",
+          "action": "click",
+          "params": {
+            "selector": "a:has-text('用户管理')",
+            "value": "",
+            "expected_status": "page_navigated",
+            "assert_logic": "应跳转到用户管理页面"
+          }
+        },
+        {
+          "step_id": "6",
+          "description": "点击新增按钮",
+          "action": "click",
+          "params": {
+            "selector": "button:has-text('新增')",
+            "value": "",
+            "expected_status": "dialog_opened",
+            "assert_logic": "应弹出新增用户对话框"
+          }
+        },
+        {
+          "step_id": "7",
+          "description": "填写用户昵称",
+          "action": "input",
+          "params": {
+            "selector": "input[placeholder*='用户昵称']",
+            "value": "昵称_{random_id}",
+            "expected_status": "field_filled",
+            "assert_logic": "昵称字段应显示输入的值"
+          }
+        },
+        {
+          "step_id": "8",
+          "description": "选择归属部门",
+          "action": "click",
+          "params": {
+            "selector": ".vue-treeselect__control",
+            "value": "",
+            "expected_status": "dropdown_opened",
+            "assert_logic": "部门下拉树应显示"
+          }
+        },
+        {
+          "step_id": "9",
+          "description": "选择若依科技部门",
+          "action": "click",
+          "params": {
+            "selector": ".vue-treeselect__menu:has-text('若依科技')",
+            "value": "",
+            "expected_status": "option_selected",
+            "assert_logic": "部门应被选中"
+          }
+        },
+        {
+          "step_id": "10",
+          "description": "填写手机号码",
+          "action": "input",
+          "params": {
+            "selector": "input[placeholder*='手机号码']",
+            "value": "1380000{random_id}",
+            "expected_status": "field_filled",
+            "assert_logic": "手机号码字段应显示输入的值"
+          }
+        },
+        {
+          "step_id": "11",
+          "description": "填写邮箱",
+          "action": "input",
+          "params": {
+            "selector": "input[placeholder*='邮箱']",
+            "value": "test{random_id}@qq.com",
+            "expected_status": "field_filled",
+            "assert_logic": "邮箱字段应显示输入的值"
+          }
+        },
+        {
+          "step_id": "12",
+          "description": "填写用户名称",
+          "action": "input",
+          "params": {
+            "selector": "input[placeholder*='用户名称']",
+            "value": "user_{random_id}",
+            "expected_status": "field_filled",
+            "assert_logic": "用户名字段应显示输入的值"
+          }
+        },
+        {
+          "step_id": "13",
+          "description": "填写用户密码",
+          "action": "input",
+          "params": {
+            "selector": "input[type='password'][placeholder*='用户密码']",
+            "value": "123456",
+            "expected_status": "field_filled",
+            "assert_logic": "密码字段应显示输入的值"
+          }
+        },
+        {
+          "step_id": "14",
+          "description": "点击确定按钮提交表单",
+          "action": "click",
+          "params": {
+            "selector": ".el-dialog__footer button:has-text('确 定')",
+            "value": "",
+            "expected_status": "form_submitted",
+            "assert_logic": "表单应被提交"
+          }
+        },
+        {
+          "step_id": "15",
+          "description": "验证新增成功提示",
+          "action": "verify",
+          "params": {
+            "selector": "text",
+            "value": "新增成功",
+            "expected_status": "visible",
+            "assert_logic": "应显示成功提示信息（操作成功/新增成功/保存成功）"
+          }
+        },
+        {
+          "step_id": "16",
+          "description": "验证Network请求状态",
+          "action": "verify",
+          "params": {
+            "selector": "api_request",
+            "value": "/system/user",
+            "expected_status": "200",
+            "assert_logic": "新增API请求应返回200状态码"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "module": "岗位管理-新增功能",
+  "test_date": "2026-01-05",
+  "test_url": "http://192.168.142.146/",
+  "total_cases": 5,
+  "passed_cases": 5,
+  "failed_cases": 0,
+  "skip_cases": 0,
+  "pass_rate": 100.0,
+  "test_cases": [
+    {
+      "case_id": "TC001",
+      "case_name": "正常新增岗位",
+      "status": "passed",
+      "execute_time": "~8s",
+      "description": "填写完整的岗位信息并提交，验证新增成功"
+    },
+    {
+      "case_id": "TC002",
+      "case_name": "新增岗位-岗位名称必填校验",
+      "status": "passed",
+      "execute_time": "~5s",
+      "description": "不填写岗位名称直接提交，验证必填校验"
+    },
+    {
+      "case_id": "TC003",
+      "case_name": "新增岗位-岗位编码必填校验",
+      "status": "passed",
+      "execute_time": "~5s",
+      "description": "仅填写岗位名称，验证岗位编码必填校验"
+    },
+    {
+      "case_id": "TC004",
+      "case_name": "新增岗位-岗位顺序为0验证",
+      "status": "passed",
+      "execute_time": "~4s",
+      "description": "验证岗位顺序字段的默认值和校验逻辑"
+    },
+    {
+      "case_id": "TC005",
+      "case_name": "新增岗位-岗位状态选择停用",
+      "status": "passed",
+      "execute_time": "~8s",
+      "description": "新建停用状态的岗位，验证状态切换功能"
+    }
+  ],
+  "test_summary": {
+    "issues_found": [],
+    "fixes_applied": [
+      "修复单选按钮点击方式，使用label点击替代input.check()避免被span遮挡"
+    ],
+    "recommendations": [
+      "新增功能整体稳定，所有必填校验正常工作",
+      "岗位状态切换功能正常，可以正确设置停用状态",
+      "建议后续增加对岗位编码唯一性的验证测试"
+    ]
+  }
+}
