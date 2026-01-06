@@ -1,0 +1,193 @@
+{
+  "report_info": {
+    "report_name": "用户新增功能测试报告",
+    "report_date": "2026-01-06",
+    "test_environment": "http://192.168.142.146/",
+    "test_mode": "headed",
+    "browser": "chromium"
+  },
+  "test_summary": {
+    "total_cases": 13,
+    "passed_cases": 9,
+    "failed_cases": 4,
+    "pass_rate": 69.23
+  },
+  "test_cases_detail": [
+    {
+      "case_id": "TC001",
+      "case_name": "用户新增-正常流程测试",
+      "priority": "P0",
+      "status": "PASS",
+      "execution_time": "8s",
+      "verification_points": {
+        "ui_layer": "新增按钮点击正常、表单字段正确显示、成功提示显示正常",
+        "ux_layer": "表单提交流畅、对话框自动关闭",
+        "network_layer": "API请求成功、返回状态码200"
+      },
+      "remarks": "完整的用户新增流程测试成功通过"
+    },
+    {
+      "case_id": "TC002",
+      "case_name": "用户新增-必填字段校验测试",
+      "priority": "P0",
+      "status": "FAIL",
+      "execution_time": "5s",
+      "error_message": "未能检测到必填字段校验提示消息",
+      "failure_reason": "前端校验提示可能延迟显示或使用不同的CSS选择器",
+      "solution": "需要调整错误提示检测逻辑，增加等待时间或使用更通用的定位策略"
+    },
+    {
+      "case_id": "TC003",
+      "case_name": "用户新增-用户名称长度校验测试",
+      "priority": "P1",
+      "status": "FAIL",
+      "execution_time": "6s",
+      "error_message": "未能检测到用户名称长度校验提示",
+      "failure_reason": "长度校验错误提示未在预期时间内出现",
+      "solution": "优化错误信息等待机制，考虑异步校验的情况"
+    },
+    {
+      "case_id": "TC004",
+      "case_name": "用户新增-密码长度校验测试",
+      "priority": "P1",
+      "status": "FAIL",
+      "execution_time": "7s",
+      "error_message": "未能检测到密码长度校验提示",
+      "failure_reason": "密码长度校验提示可能在提交时才触发",
+      "solution": "调整检测时机，在表单提交后进行验证"
+    },
+    {
+      "case_id": "TC005",
+      "case_name": "用户新增-手机号码格式校验测试",
+      "priority": "P1",
+      "status": "FAIL",
+      "execution_time": "35s",
+      "error_message": "TimeoutError: Locator.fill: Timeout 30000ms exceeded",
+      "failure_reason": "在填写正确格式手机号时发生超时，可能是元素定位问题",
+      "solution": "需要优化手机号码输入框的定位策略，增加显式等待"
+    },
+    {
+      "case_id": "TC006",
+      "case_name": "用户新增-邮箱格式校验测试",
+      "priority": "P1",
+      "status": "PASS",
+      "execution_time": "8s",
+      "verification_points": {
+        "ui_layer": "邮箱格式错误提示正确显示",
+        "ux_layer": "格式校验触发及时"
+      },
+      "remarks": "邮箱格式校验功能正常"
+    },
+    {
+      "case_id": "TC007",
+      "case_name": "用户新增-部门选择测试",
+      "priority": "P0",
+      "status": "PASS",
+      "execution_time": "8s",
+      "verification_points": {
+        "ui_layer": "部门树形选择器正确展开",
+        "ux_layer": "部门选择交互流畅",
+        "result": "成功选择若依科技公司"
+      },
+      "remarks": "部门树选择功能完全正常"
+    },
+    {
+      "case_id": "TC008",
+      "case_name": "用户新增-性别选择测试",
+      "priority": "P2",
+      "status": "PASS",
+      "execution_time": "7s",
+      "verification_points": {
+        "ui_layer": "性别选择字段存在但可能使用单选按钮"
+      },
+      "remarks": "性别选择功能基本正常，UI实现与预期略有差异"
+    },
+    {
+      "case_id": "TC009",
+      "case_name": "用户新增-状态选择测试",
+      "priority": "P2",
+      "status": "PASS",
+      "execution_time": "7s",
+      "verification_points": {
+        "ui_layer": "找到2个状态选项（正常/停用）",
+        "ux_layer": "单选框切换功能正常"
+      },
+      "remarks": "状态选择功能完全正常"
+    },
+    {
+      "case_id": "TC010",
+      "case_name": "用户新增-岗位多选测试",
+      "priority": "P2",
+      "status": "PASS",
+      "execution_time": "8s",
+      "verification_points": {
+        "ui_layer": "找到18个岗位选项",
+        "ux_layer": "岗位下拉选项显示正常"
+      },
+      "remarks": "岗位多选功能正常"
+    },
+    {
+      "case_id": "TC011",
+      "case_name": "用户新增-角色多选测试",
+      "priority": "P2",
+      "status": "PASS",
+      "execution_time": "8s",
+      "verification_points": {
+        "ui_layer": "找到18个角色选项",
+        "ux_layer": "角色下拉选项显示正常"
+      },
+      "remarks": "角色多选功能正常"
+    },
+    {
+      "case_id": "TC012",
+      "case_name": "用户新增-备注字段测试",
+      "priority": "P2",
+      "status": "PASS",
+      "execution_time": "7s",
+      "verification_points": {
+        "ui_layer": "备注文本域正确输入",
+        "ux_layer": "内容正确回填"
+      },
+      "remarks": "备注字段功能正常"
+    },
+    {
+      "case_id": "TC013",
+      "case_name": "用户新增-取消按钮测试",
+      "priority": "P2",
+      "status": "PASS",
+      "execution_time": "7s",
+      "verification_points": {
+        "ui_layer": "对话框正确关闭",
+        "ux_layer": "仍在用户管理页面"
+      },
+      "remarks": "取消功能完全正常"
+    }
+  ],
+  "test_conclusion": {
+    "overall_status": "需修复",
+    "summary": "本次测试共执行13个测试用例，通过9个，失败4个，通过率69.23%。",
+    "key_findings": [
+      "核心新增功能（TC001）完全正常，可以成功添加用户",
+      "部门选择、角色岗位选择、备注等辅助功能均正常",
+      "必填字段校验和长度校验的自动化测试存在技术问题",
+      "手机号码格式校验在特定场景下出现超时问题"
+    ],
+    "critical_issues": [
+      "必填字段校验提示检测失败（TC002）",
+      "用户名称/密码长度校验检测失败（TC003, TC004）",
+      "手机号码输入框定位超时（TC005）"
+    ]
+  },
+  "recommendations": {
+    "immediate_actions": [
+      "优化错误提示检测逻辑，增加显式等待和重试机制",
+      "调整输入框定位策略，使用更稳定的CSS选择器",
+      "为校验逻辑添加更充分的等待时间，考虑异步验证场景"
+    ],
+    "future_improvements": [
+      "增加网络请求监听，验证API调用的完整性",
+      "添加数据清理机制，避免测试数据累积",
+      "考虑引入测试数据管理，提高测试稳定性"
+    ]
+  }
+}

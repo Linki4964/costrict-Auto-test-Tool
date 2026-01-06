@@ -1,11 +1,9 @@
 {
-  "module": "Frontend-UI",
-  "environment": {
-    "target_url": "http://192.168.142.146/",
-    "project": "../RuoYi-Vue",
-    "mode": "headed", 
-    "browser": "chromium"
-  },
+  "target_url": "http://192.168.142.146",
+  "username": "admin",
+  "password": "admin123",
+  "work_dir": "./workspace",
+  "project_source": "../../RuoYi-Vue/RuoYi-Vue-master/ruoyi-ui",
   "auth_flow": {
     "requires_login": true,
     "login_page_url": "http://192.168.142.146/login?redirect=%2Findex",
@@ -16,11 +14,11 @@
   },
   "test_scope": {
     "routes": [
-      "/system/post"
+      "/system/user"
     ],
     "element_wait_timeout": 5000
   },
   "workspace": {
-    "path": "./工作区"
+    "path": "./workspace"
   }
 }

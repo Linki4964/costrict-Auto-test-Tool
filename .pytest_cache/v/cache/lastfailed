@@ -45,5 +45,6 @@
   "test_user_delete_final.py::test_delete_admin_user": true,
   "test_user_delete_final.py::test_cancel_delete_operation": true,
   "test_user_delete_final.py::test_batch_delete_multiple_users": true,
-  "test_user_delete_final.py::test_normal_delete_user": true
+  "test_user_delete_final.py::test_normal_delete_user": true,
+  "workspace/20260106+登录功能测试/20260106_登录_登录功能测试.py::TestLogin::test_login_empty_username": true
 }
