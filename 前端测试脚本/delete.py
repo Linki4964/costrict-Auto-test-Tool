@@ -1,6 +1,0 @@
-    page.goto("http://192.168.142.146/login?redirect=%2Findex")
-    page.get_by_role("button", name="登 录").click()
-    page.locator("div").filter(has_text=re.compile(r"^系统管理$")).click()
-    page.get_by_role("link", name="用户管理").click()
-    page.get_by_role("button", name=" 删除").nth(1).click()
-    page.get_by_role("button", name="确定").click()
